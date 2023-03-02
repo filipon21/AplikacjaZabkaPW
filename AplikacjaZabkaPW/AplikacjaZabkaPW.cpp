@@ -1,11 +1,34 @@
 ﻿// AplikacjaZabkaPW.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
 //
 
-#include <iostream>
+#include "Game.h"
+
+//using namespace sf;
 
 int main()
+
+
 {
-    std::cout << "Hello World!\n";
+
+	//Init Game engine
+	Game game;
+	 
+	// Game loop (trwa jesli okno otwarte)
+	while (game.running()) {
+
+
+		//Update
+		game.update();
+
+		//Render
+		game.render(); // czyści stary frame (klatke); 
+		//:: ScopeResolution operator służy tutaj do wczytania static variable; moze takze sluzyc do wczytywania zmiennej globalnej jesli lokalna ma taka sama nazwe
+
+		//Draw game
+		window.display(); // mówi apikacji, że okno skończyło rysować
+	}
+	//End of application
+	return 0;
 }
 
 // Uruchomienie programu: Ctrl + F5 lub menu Debugowanie > Uruchom bez debugowania
