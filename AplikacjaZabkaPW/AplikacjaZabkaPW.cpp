@@ -24,8 +24,6 @@ int main()
 		game.render(); // czyści stary frame (klatke); 
 		//:: ScopeResolution operator służy tutaj do wczytania static variable; moze takze sluzyc do wczytywania zmiennej globalnej jesli lokalna ma taka sama nazwe
 
-		//Draw game
-		window.display(); // mówi apikacji, że okno skończyło rysować
 	}
 	//End of application
 	return 0;

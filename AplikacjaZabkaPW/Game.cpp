@@ -31,6 +31,7 @@ const bool Game::running() const
 
 
 
+
 //Functions
 void Game::pollEvents()
 {
@@ -44,7 +45,7 @@ void Game::pollEvents()
 		case sf::Event::KeyPressed:
 			if (ev.key.code == sf::Keyboard::LAlt + ev.key.code == sf::Keyboard::F4)
 			{
-				window.close();
+				this->window->close();
 			}
 			break;
 		default:
@@ -60,5 +61,10 @@ void Game::update()
 
 void Game::render()
 {
+	this->window->clear(sf::Color(255,0,0,255));
+
+	//Rysuj obiekty w grze
+	this->window->display();
+
 }
  
