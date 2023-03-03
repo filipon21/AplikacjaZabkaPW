@@ -17,7 +17,7 @@ private:
 	//Variables
 	
 	// Window
-	sf::RenderWindow* window; //u¿yto wska¿nik, dziêki niemu mozna dostaæ siê do ktorejkolwiek z klas pochodnych (polimorfizm)
+	sf::RenderWindow* window; //u¿yto wska¿nik, dziêki niemu mozna dostaæ siê do ktorejkolwiek z klas pochodnych (polimorfizm), czyli dynamicznie
 	sf::VideoMode videoMode;
 	sf::Event ev; //zmienna do ³apania eventów np. klikania przyciskow
 
@@ -36,7 +36,7 @@ public:
 	 *
 	 * \return true or false:bool
 	 */
-	const bool running() const;
+	void run();
 	
 	// Functions
 	/**
@@ -45,7 +45,7 @@ public:
 	 */
 	void pollEvents();
 	/**
-	 * Method used to run pollEvents() method.
+	 * Method used to updates all data of game in each frame
 	 *
 	 */
 	void update();
