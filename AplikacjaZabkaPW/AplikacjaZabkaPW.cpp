@@ -6,25 +6,12 @@
 //using namespace sf;
 
 int main()
-
-
 {
-
 	//Init Game engine
 	Game game;
 	 
-	// Game loop (trwa jesli okno otwarte)
-	while (game.running()) {
+	game.run();
 
-
-		//Update
-		game.update();
-
-		//Render
-		game.render(); // czyści stary frame (klatke); 
-		//:: ScopeResolution operator służy tutaj do wczytania static variable; moze takze sluzyc do wczytywania zmiennej globalnej jesli lokalna ma taka sama nazwe
-
-	}
 	//End of application
 	return 0;
 }

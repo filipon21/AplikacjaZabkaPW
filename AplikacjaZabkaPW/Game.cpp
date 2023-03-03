@@ -24,9 +24,14 @@ Game::~Game() {
 }
 
 //Accessors
-const bool Game::running() const
+void Game::run()
 {
-	return this->window->isOpen(); // -> bo jest to wskaŸnik i chcemy siê dostaæ do konkretnej kalsy pochodnej (polimorfizm)
+	while (this->window->isOpen())
+	{
+		this->update();
+		this->render();
+	}
+	
 }
 
 
@@ -61,10 +66,12 @@ void Game::update()
 
 void Game::render()
 {
-	this->window->clear(sf::Color(255,0,0,255));
+	this->window->clear(sf::Color::Black);
+	//:: ScopeResolution operator s³u¿y tutaj do wczytania static variable; moze takze sluzyc do wczytywania zmiennej globalnej jesli lokalna ma taka sama nazwe
+
 
 	//Rysuj obiekty w grze
-	this->window->display();
+	this->window->display(); // -> bo jest to wskaŸnik i chcemy siê dostaæ do konkretnej kalsy pochodnej (polimorfizm); dynamicznie
 
 }
  
