@@ -11,6 +11,8 @@ void Game::initWindow()
 	this->videoMode.height = 900;
 	this->videoMode.width = 1400;
 	this->window = new sf::RenderWindow(this->videoMode, "ZABKA ULICZNA", sf::Style::Titlebar | sf::Style::Close); //tworzenie okna gry z mozliwoscia zamkniecia i tytulem
+	this->window->setFramerateLimit(144); //TODO zmiana w mnenu
+	this->window->setVerticalSyncEnabled(false); //TODO zmiana w mnenu
 }
 
 //Constructors / Destructors
