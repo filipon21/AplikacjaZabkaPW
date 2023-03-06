@@ -7,31 +7,35 @@
 class Character
 {
 private:
+	/**
+	 * Method for updating character.
+	 *
+	 */
+	void update();
 
-private:
+protected:
 	sf::Texture texture;
 	sf::Sprite sprite;
 
 	float movementSpeed;
 
-	//virtual void initTexture() = 0;
-	void initTexture();
+	float spriteScaleX;
+	float spriteScaleY;
+
+	//const std::string& filePath;
+
+	virtual void initTexture() = 0;
 	void initSprite();
 
 public:
 	//Constructors/Destructors
-	Character();
+	Character(float movementSpeed, float spriteScaleX, float spriteScaleY);
 	~Character();
 
 	//Functions
 
-	void move(const float dirX, const float dirY);
+	virtual void move(const float dirX, const float dirY) = 0;
 
-	/**
-	 * Method for updating character.
-	 * 
-	 */
-	void update();
 
 	/**
 	 * Method for rendering sprite.
@@ -39,5 +43,11 @@ public:
 	 * \param target:RenderTarget - sprite to render
 	 */
 	void render(sf::RenderTarget& target);
+
+	/**
+	 * MEthod for adding textures initalize textures and add them to character.
+	 * 
+	 */
+	void makeChar();
 };
 

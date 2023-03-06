@@ -5,6 +5,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 #include "Character.h"
+#include "Frog.h"
 
 /*
 * Class that acts as the game engine.
