@@ -1,39 +1,20 @@
 #include "Character.h"
 
-void Character::initSprite()
+Character::Character(float movementSpeed, float spriteScaleX, float spriteScaleY): movementSpeed(movementSpeed), spriteScaleX(spriteScaleX), spriteScaleY(spriteScaleY)
 {
-	//ustawia texture na sprite
-	this->sprite.setTexture(this->texture); //ustawia texture na sprite
-
-	//dopasowuje sprite
-	this->sprite.scale(0.4f, 0.4f);
-}
-
-void Character::initTexture()
-{
-
-	// wczytanie textury
-	if (!this->texture.loadFromFile("Textures/frog.png"))
-	{
-		std::cout << "ERROR::PLAYER::INITTEXTURE::Could not load texture file." << "\n";
-	}
-
-}
-
-Character::Character()
-{
-	this->movementSpeed = 1.f;
-	this->initTexture();
-	this->initSprite();
 }
 
 Character::~Character()
 {
 }
 
-void Character::move(const float dirX, const float dirY)
+void Character::initSprite()
 {
-	this->sprite.move(this->movementSpeed * dirX, this->movementSpeed * dirY);
+    // set the texture to the sprite
+    this->sprite.setTexture(this->texture);
+
+    //resize the sprite
+    this->sprite.scale(this->spriteScaleX, this->spriteScaleY);
 }
 
 void Character::update()
@@ -42,5 +23,11 @@ void Character::update()
 
 void Character::render(sf::RenderTarget& target)
 {
-	target.draw(this->sprite);
+    target.draw(this->sprite);
+}
+
+void Character::makeChar()
+{
+    this->initTexture();
+    this->initSprite();
 }

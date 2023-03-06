@@ -12,7 +12,8 @@ void Game::initWindow()
 
 void Game::initCharacter()
 {
-	this->character = new Character();
+    this->character = new Frog(1.f, 0.5f, 0.5f);
+	this->character->makeChar();
 }
 
 //Constructors / Destructors
