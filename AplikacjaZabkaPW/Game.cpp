@@ -1,10 +1,5 @@
 #include "Game.h"
 
-//Private functions
-void Game::initializeVariables()
-{
-	this->window = nullptr;
-}
 
 void Game::initWindow()
 {
@@ -15,14 +10,20 @@ void Game::initWindow()
 	this->window->setVerticalSyncEnabled(false); //TODO zmiana w mnenu
 }
 
+void Game::initCharacter()
+{
+	this->character = new Character();
+}
+
 //Constructors / Destructors
 Game::Game() {
-	this->initializeVariables();
 	this->initWindow();
+	this->initCharacter();
 }
 
 Game::~Game() {
 	delete this->window;
+	delete this->character;
 }
 
 //Accessors
@@ -36,11 +37,7 @@ void Game::run()
 	
 }
 
-
-
-
-//Functions
-void Game::pollEvents()
+void Game::update()
 {
 	//Event polling
 	while (this->window->pollEvent(this->ev)) { // jeœli okno z³apie jakikolwiek event, zapisze je w zmiennej ev 
@@ -59,11 +56,20 @@ void Game::pollEvents()
 			break;
 		}
 	}
-}
 
-void Game::update()
-{
-	this->pollEvents();
+	//Move player
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		this->character->move(-1.f, 0.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		this->character->move(1.f, 0.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		this->character->move(0.f, -1.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		this->character->move(0.f, 1.f);
+	}
 }
 
 void Game::render()
@@ -71,6 +77,7 @@ void Game::render()
 	this->window->clear(sf::Color::Black);
 	//:: ScopeResolution operator s³u¿y tutaj do wczytania static variable; moze takze sluzyc do wczytywania zmiennej globalnej jesli lokalna ma taka sama nazwe
 
+	this->character->render(*this->window);
 
 	//Rysuj obiekty w grze
 	this->window->display(); // -> bo jest to wskaŸnik i chcemy siê dostaæ do konkretnej kalsy pochodnej (polimorfizm); dynamicznie

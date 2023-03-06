@@ -1,11 +1,10 @@
 #pragma once //#pragma once pozwala na includowanie pliku do woli :)
 
 #include <iostream>
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+#include "Character.h"
 
 /*
 * Class that acts as the game engine.
@@ -21,9 +20,12 @@ private:
 	sf::VideoMode videoMode;
 	sf::Event ev; //zmienna do ³apania eventów np. klikania przyciskow
 
+	// Character
+	Character* character;
+
 	//Private functions
-	void initializeVariables();
 	void initWindow();
+	void initCharacter();
 
 public:
 	// Contructors / Destructors
@@ -34,16 +36,9 @@ public:
 	/**
 	 * Method that checks if the game is still running (is window still open?)
 	 *
-	 * \return true or false:bool
 	 */
 	void run();
 	
-	// Functions
-	/**
-	 * Method used to poll events (it checks for new events like mouse click etc.).
-	 * 
-	 */
-	void pollEvents();
 	/**
 	 * Method used to updates all data of game in each frame
 	 *
