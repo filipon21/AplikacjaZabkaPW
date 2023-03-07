@@ -10,35 +10,42 @@ void Game::initWindow()
 	this->window->setVerticalSyncEnabled(false); //TODO zmiana w mnenu
 }
 
+void Game::initTextures()
+{
+	 
+}
+
 void Game::initCharacter()
 {
     this->character = new Frog(1.f, 0.5f, 0.5f);
 	this->character->makeChar();
+
 }
 
-//Constructors / Destructors
-Game::Game() {
-	this->initWindow();
-	this->initCharacter();
-}
-
-Game::~Game() {
-	delete this->window;
-	delete this->character;
-}
-
-//Accessors
-void Game::run()
+void Game::initEnemies()
 {
-	while (this->window->isOpen())
-	{
-		this->update();
-		this->render();
-	}
-	
+	this->spawnTimerMax = 50.f;
+	this->spawnTimer = this->spawnTimerMax;
 }
 
-void Game::update()
+void Game::updateInput()
+{
+	//Move player
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		this->character->move(-1.f, 0.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		this->character->move(1.f, 0.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		this->character->move(0.f, -1.f);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		this->character->move(0.f, 1.f);
+	}
+}
+
+void Game::updatePollEvents()
 {
 	//Event polling
 	while (this->window->pollEvent(this->ev)) { // jeœli okno z³apie jakikolwiek event, zapisze je w zmiennej ev 
@@ -57,20 +64,50 @@ void Game::update()
 			break;
 		}
 	}
+}
 
-	//Move player
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		this->character->move(-1.f, 0.f);
+//Constructors / Destructors
+Game::Game() {
+	this->initWindow();
+	this->initTextures();
+	this->initCharacter();
+	this->initEnemies();
+}
+
+Game::~Game() {
+	delete this->window;
+	delete this->character;
+
+	//delete textures for avoid memmory leak
+	for (auto &i : this->textures)
+	{
+		delete i.second;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		this->character->move(1.f, 0.f);
+
+	//delete enemies for avoid memmory leak
+	for (auto& i : this->enemies)
+	{
+		delete i;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		this->character->move(0.f, -1.f);
+}
+
+//Accessors
+void Game::run()
+{
+	while (this->window->isOpen())
+	{
+		this->update();
+		this->render();
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		this->character->move(0.f, 1.f);
-	}
+	
+}
+
+void Game::update()
+{
+	this->updatePollEvents();
+	this->updateInput();
+
+	this->updateEnemies();
 }
 
 void Game::render()
@@ -80,8 +117,28 @@ void Game::render()
 
 	this->character->render(*this->window);
 
+	for ( auto *enemy : this->enemies )
+	{
+		enemy->render(this->window);
+	}
+
 	//Rysuj obiekty w grze
 	this->window->display(); // -> bo jest to wskaŸnik i chcemy siê dostaæ do konkretnej kalsy pochodnej (polimorfizm); dynamicznie
 
+}
+
+void Game::updateEnemies()
+{
+	this->spawnTimer += 0.5f;
+	if (this->spawnTimer >= this->spawnTimerMax)
+	{
+		this->enemies.push_back(new Enemy(rand() % 200, rand() % 200));
+		this->spawnTimer = 0.f;
+	}
+
+	for (auto* enemy : this->enemies)
+	{
+		enemy->update();
+	}
 }
  

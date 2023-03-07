@@ -32,6 +32,10 @@ public:
 	Character(float movementSpeed, float spriteScaleX, float spriteScaleY);
 	~Character();
 
+	//Accessor
+	const sf::Vector2f& getPos() const;
+	const sf::FloatRect getBounds() const;
+
 	//Functions
 
 	virtual void move(const float dirX, const float dirY) = 0;

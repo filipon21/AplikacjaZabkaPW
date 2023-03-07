@@ -8,6 +8,16 @@ Character::~Character()
 {
 }
 
+const sf::Vector2f& Character::getPos() const
+{
+    return this->sprite.getPosition();
+}
+
+const sf::FloatRect Character::getBounds() const
+{
+    return this->sprite.getGlobalBounds();
+}
+
 void Character::initSprite()
 {
     // set the texture to the sprite
