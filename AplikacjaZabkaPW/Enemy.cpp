@@ -34,8 +34,14 @@ Enemy::~Enemy()
 {
 }
 
+const sf::FloatRect Enemy::getBounds() const
+{
+	return this->shape.getGlobalBounds();
+}
+
 void Enemy::update()
 {
+	this->shape.move(10.f, 0.f);
 }
 
 void Enemy::render(sf::RenderTarget* target)
