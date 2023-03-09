@@ -16,6 +16,14 @@ class Game
 {
 private:
 	
+	//GUI
+	sf::Font font;
+	sf::Text pointText;
+
+	//Background texture
+	sf::Sprite worldBackground;
+	sf::Texture backgroundTexture;
+
 	// Window
 	sf::RenderWindow* window; //u¿yto wska¿nik, dziêki niemu mozna dostaæ siê do ktorejkolwiek z klas pochodnych (polimorfizm), czyli dynamicznie
 	sf::VideoMode videoMode;
@@ -34,7 +42,11 @@ private:
 	float spawnTimerMax;
 	std::vector<Enemy*> enemies;
 
+
 	//Private functions
+	void initGUI();
+	void initBackground();
+
 	void initWindow();
 	void initTextures();
 
@@ -70,5 +82,13 @@ public:
 	void render();
 
 	void updateEnemies();
+
+	void updateCombat();
+
+
+	void updateGUI();
+	void renderGUI();
+
+	void renderBackground();
 };
 

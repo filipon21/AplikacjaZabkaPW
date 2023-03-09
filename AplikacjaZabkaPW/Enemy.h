@@ -9,7 +9,7 @@ private:
 	sf::CircleShape shape;
 
 	int type;
-
+	float speed;
 	int hp;
 	int hpMax;
 	int damage;

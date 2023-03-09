@@ -1,6 +1,30 @@
 #include "Game.h"
 
 
+void Game::initGUI()
+{
+	//Load fonts
+	if (!this->font.loadFromFile("Fonts/PixellettersFull.ttf"))
+	{
+		std::cout << "ERROR::GAME::Failed to load font" << "\n";
+	}
+
+	//Init point text
+	this->pointText.setFont(this->font);
+	this->pointText.setCharacterSize(12);
+	this->pointText.setFillColor(sf::Color::White);
+	this->pointText.setString("test");
+}
+
+void Game::initBackground()
+{
+	if (!this->backgroundTexture.loadFromFile("Textures/grass3.jpg"))
+	{
+		std::cout << "ERROR::GAME:: Could not load background texture" << "\n";
+	}
+	this->worldBackground.setTexture(this->backgroundTexture);
+}
+
 void Game::initWindow()
 {
 	this->videoMode.height = 900;
@@ -12,12 +36,12 @@ void Game::initWindow()
 
 void Game::initTextures()
 {
-	 
+	
 }
 
 void Game::initCharacter()
 {
-    this->character = new Frog(1.f, 0.5f, 0.5f);
+	this->character = new Frog(2.f, 0.5f, 0.5f);
 	this->character->makeChar();
 
 }
@@ -72,6 +96,9 @@ Game::Game() {
 	this->initTextures();
 	this->initCharacter();
 	this->initEnemies();
+	this->initBackground();
+	this->initGUI();
+
 }
 
 Game::~Game() {
@@ -79,7 +106,7 @@ Game::~Game() {
 	delete this->character;
 
 	//delete textures for avoid memmory leak
-	for (auto &i : this->textures)
+	for (auto& i : this->textures)
 	{
 		delete i.second;
 	}
@@ -99,7 +126,7 @@ void Game::run()
 		this->update();
 		this->render();
 	}
-	
+
 }
 
 void Game::update()
@@ -108,6 +135,8 @@ void Game::update()
 	this->updateInput();
 
 	this->updateEnemies();
+
+	this->updateGUI();
 }
 
 void Game::render()
@@ -115,20 +144,28 @@ void Game::render()
 	this->window->clear(sf::Color::Black);
 	//:: ScopeResolution operator s³u¿y tutaj do wczytania static variable; moze takze sluzyc do wczytywania zmiennej globalnej jesli lokalna ma taka sama nazwe
 
+	//Draw background
+	this->renderBackground();
+
+	//Draw charcter and enemies
 	this->character->render(*this->window);
 
-	for ( auto *enemy : this->enemies )
+	for (auto* enemy : this->enemies)
 	{
 		enemy->render(this->window);
 	}
 
-	//Rysuj obiekty w grze
+	//Draw GUI
+	this->renderGUI();
+
+	//Display all objects
 	this->window->display(); // -> bo jest to wskaŸnik i chcemy siê dostaæ do konkretnej kalsy pochodnej (polimorfizm); dynamicznie
 
 }
 
 void Game::updateEnemies()
 {
+	//Spawning
 	this->spawnTimer += 0.5f;
 	if (this->spawnTimer >= this->spawnTimerMax)
 	{
@@ -136,16 +173,52 @@ void Game::updateEnemies()
 		this->spawnTimer = 0.f;
 	}
 
-	for(int i = 0; i < this->enemies.size(); ++i)
+	//Update
+	unsigned counter = 0;
+	for (auto* enemy : this->enemies)
 	{
-		this->enemies[i]->update();
+		enemy->update();
 
-		//remove enemy at the bottom of the screen
-		if (this->enemies[i]->getBounds().left + this->enemies[i]->getBounds().width > this->window->getSize().x)
+		if (enemy->getBounds().left + enemy->getBounds().width > this->window->getSize().x)
 		{
-			this->enemies.erase(this->enemies.begin() + i);
+			//delete enemy
+			delete this->enemies.at(counter);
+			this->enemies.erase(this->enemies.begin() + counter);
 			std::cout << this->enemies.size() << "\n";
 		}
 	}
+
+	//for (int i = 0; i < this->enemies.size(); ++i)
+	//{
+
+	//	this->enemies[i]->update();
+
+	//	//remove enemy at the bottom of the screen
+	//	if (this->enemies[i]->getBounds().left + this->enemies[i]->getBounds().width > this->window->getSize().x)
+	//	{
+	//		this->enemies.erase(this->enemies.begin() + i);
+	//		std::cout << this->enemies.size() << "\n";
+	//	}
+	//}
 }
- 
+
+void Game::updateCombat()
+{
+
+}
+
+void Game::updateGUI()
+{
+
+}
+
+void Game::renderGUI()
+{
+	this->window->draw(this->pointText);
+}
+
+void Game::renderBackground()
+{
+	this->window->draw(this->worldBackground);
+}
+
