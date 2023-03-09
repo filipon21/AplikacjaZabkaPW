@@ -2,11 +2,15 @@
 //
 
 #include "Game.h"
+#include "time.h"
 
 //using namespace sf;
 
 int main()
 {
+	srand(static_cast<unsigned>(time(0)));
+	//srand(time(static_cast<int>(0)));
+
 	//Init Game engine
 	Game game;
 	 
