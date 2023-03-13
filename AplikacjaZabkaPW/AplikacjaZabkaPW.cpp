@@ -1,6 +1,7 @@
 ﻿// AplikacjaZabkaPW.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
 //
 
+#include "Definitions.h"
 #include "Game.h"
 #include "time.h"
 
@@ -8,16 +9,9 @@
 
 int main()
 {
-	srand(static_cast<unsigned>(time(0)));
-	//srand(time(static_cast<int>(0)));
+	Game(SCREEN_WIDTH, SCREEN_HEIGHT, "Flappy Bird");
 
-	//Init Game engine
-	Game game;
-	 
-	game.run();
-
-	//End of application
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 // Uruchomienie programu: Ctrl + F5 lub menu Debugowanie > Uruchom bez debugowania

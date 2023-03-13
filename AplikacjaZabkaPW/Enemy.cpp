@@ -1,23 +1,22 @@
 #include "Enemy.h"
 
-void Enemy::initShape()
-{
-	this->shape.setRadius(rand()%20+20);
-	this->shape.setPointCount(rand()%20+3);
-	this->shape.setFillColor(sf::Color(rand()%255+1, rand()%255+1, rand() % 255 + 1, 255));
-}
-
 void Enemy::initVariables()
 {
+	 this->pointCount = rand() % 8 + 3; //min = 3, max = 10
 	 this->type = 0;
-	 this->hp = 10;
-	 this->speed = 3.f;
-	 this->hpMax = 0;
-	 this->damage = 1;
-	 this->points = 5;
+	 this->speed = static_cast<float>(this->pointCount/3);
+	 this->hpMax = static_cast<float>(this->pointCount);
+	 this->hp = this->hpMax;
+	 this->damage = this->pointCount;
+	 this->points = this->pointCount;
 }
 
-
+void Enemy::initShape()
+{
+	this->shape.setRadius(this->pointCount * 5);
+	this->shape.setPointCount(this->pointCount);
+	this->shape.setFillColor(sf::Color(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1, 255));
+}
 
 Enemy::Enemy()
 {
@@ -25,8 +24,8 @@ Enemy::Enemy()
 
 Enemy::Enemy(float posX, float posY)
 {
-	this->initShape();
 	this->initVariables();
+	this->initShape();
 
 	this->shape.setPosition(posX, posY);
 }
@@ -40,12 +39,17 @@ const sf::FloatRect Enemy::getBounds() const
 	return this->shape.getGlobalBounds();
 }
 
+const int& Enemy::getDamage() const
+{
+	return this->damage;
+}
+
 void Enemy::update()
 {
 	this->shape.move(this->speed, 0.f);
 }
 
-void Enemy::render(sf::RenderTarget* target)
+void Enemy::render(sf::RenderTarget& target)
 {
-	target->draw(this->shape);
+	target.draw(this->shape);
 }

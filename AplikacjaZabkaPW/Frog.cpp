@@ -1,6 +1,6 @@
 #include "Frog.h"
 
-Frog::Frog(float movementSpeed, float spriteScaleX, float spriteScaleY) : Character(movementSpeed, spriteScaleX, spriteScaleY)
+Frog::Frog(float movementSpeed, float spriteScaleX, float spriteScaleY, int hp, int hpMax) : Character(movementSpeed, spriteScaleX, spriteScaleY, hp, hpMax)
 {
 }
 

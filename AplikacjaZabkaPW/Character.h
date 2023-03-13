@@ -17,6 +17,9 @@ protected:
 	sf::Texture texture;
 	sf::Sprite sprite;
 
+	int hp;
+	int hpMax;
+
 	float movementSpeed;
 
 	float spriteScaleX;
@@ -24,20 +27,28 @@ protected:
 
 	//const std::string& filePath;
 
+	//protected functions
 	virtual void initTexture() = 0;
 	void initSprite();
 
+
 public:
 	//Constructors/Destructors
-	Character(float movementSpeed, float spriteScaleX, float spriteScaleY);
-	~Character();
+	Character(float movementSpeed, float spriteScaleX, float spriteScaleY, int hp, int hpMax);
+	virtual ~Character();
 
 	//Accessor
 	const sf::Vector2f& getPos() const;
 	const sf::FloatRect getBounds() const;
+	const int& getHp() const;
+	const int& getHpMax() const;
+
+	//Modifiers
+	void setPosition(const float x, const float y);
+	void setHp(const int hp);
+	void loseHp(const int value);
 
 	//Functions
-
 	virtual void move(const float dirX, const float dirY) = 0;
 
 

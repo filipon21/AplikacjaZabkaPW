@@ -9,7 +9,7 @@ protected:
 
 public:
     //Constructors/Destructors
-    Frog(float movementSpeed, float spriteScaleX, float spriteScaleY);
+    Frog(float movementSpeed, float spriteScaleX, float spriteScaleY, int hp, int hpMax);
     ~Frog();
 
     //Functions
