@@ -14,6 +14,7 @@ private:
 	int hpMax;
 	int damage;
 	int points;
+	int pointCount;
 
 	void initShape();
 	void initVariables();
@@ -25,8 +26,9 @@ public:
 
 	//Accessor
 	const sf::FloatRect getBounds() const;
-
+	const int& getDamage() const;
+	
 	void update();
-	void render(sf::RenderTarget* target);
+	void render(sf::RenderTarget& target);
 };
 
