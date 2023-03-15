@@ -44,7 +44,7 @@ MainMenuState::MainMenuState(GameDataRef data) : _data(data)
 			if (this->_data->input.IsSpriteClicked(this->_playButton, sf::Mouse::Left, this->_data->window))
 			{
 				std::cout << "Go To Game Screen" << std::endl;
-				this->_data->machine.AddState(StateRef(new GameState(_data)), true);
+				this->_data->machine.addState(StateRef(new GameState(_data)), true);
 			}
 		}
 	}

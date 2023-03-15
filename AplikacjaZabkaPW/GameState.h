@@ -9,6 +9,7 @@
 #include "Frog.h"
 #include "Enemy.h"
 #include "Game.h"
+#include "Level.h"
 
 /*
 * Class that acts as the game engine.
@@ -36,14 +37,14 @@ private:
 	sf::Text gameOverText;
 
 	//Systems
+	Level* level1;
 	unsigned level;
 
 	//Background texture
 	sf::Sprite worldBackground;
-	sf::Texture backgroundTexture;
 
-	//Resources
-	std::map<std::string, sf::Texture*> textures; // * bo nie chcemy kopiowac tekstur tylko odnieœæ siê do tej konkretnej bez kopiowania dla optymalizacji
+	//Street texture
+	sf::Sprite road;
 
 	//Event
 	sf::Event ev; //zmienna do ³apania eventów np. klikania przyciskow

@@ -5,21 +5,23 @@
 #include "Game.h"
 #include "State.h"
 
-	class SplashState : public State
-	{
-	public:
-		SplashState(GameDataRef data);
+class SplashState : public State
+{
+public:
+	SplashState(GameDataRef data);
 
-		void init();
+	void init();
 
-		void handleInput();
-		void update(float dt);
-		void draw(float dt);
+	void handleInput();
+	void update(float dt);
+	void draw(float dt);
 
-	private:
-		GameDataRef _data;
+private:
+	GameDataRef _data;
 
-		sf::Clock _clock;
+	sf::Clock _clock;
 
-		sf::Sprite _background;
-	};
+	sf::Sprite _background;
+
+	sf::Text titleText;
+};

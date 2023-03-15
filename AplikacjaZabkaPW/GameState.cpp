@@ -3,7 +3,7 @@
 #include <sstream>
 #include "DEFINITIONS.h"
 #include "GameState.h"
-
+#include "Level.h"
 #include <iostream>
 
 
@@ -14,12 +14,6 @@ GameState::GameState(GameDataRef data) : _data(data)
 
 GameState::~GameState() {
 	delete this->character;
-
-	//delete textures for avoid memmory leak
-	for (auto& i : this->textures)
-	{
-		delete i.second;
-	}
 
 	//delete enemies for avoid memmory leak
 	for (auto& i : this->enemies)
@@ -104,7 +98,7 @@ void GameState::draw(float dt)
 void GameState::initGUI()
 {
 	//Load fonts
-	if (!this->font.loadFromFile("Fonts/PixellettersFull.ttf"))
+	if (!this->font.loadFromFile("Resources/fonts/PixellettersFull.ttf"))
 	{
 		std::cout << "ERROR::GAME::Failed to load font" << "\n";
 	}
@@ -133,11 +127,17 @@ void GameState::initGUI()
 
 void GameState::initBackground()
 {
-	if (!this->backgroundTexture.loadFromFile("Textures/grass3.jpg"))
-	{
-		std::cout << "ERROR::GAME:: Could not load background texture" << "\n";
-	}
-	this->worldBackground.setTexture(this->backgroundTexture);
+	//this->_data->assets.loadTexture("game_background", GAME_BACKGROUND_FILEPATH);
+
+	//this->worldBackground.setTexture(this->_data->assets.getTexture("game_background"));
+
+	//this->_data->assets.loadTexture("road", ROAD_FILEPATH);
+
+	//this->road.setTexture(this->_data->assets.getTexture("road"));
+	//this->road.setPosition(0.f, (this->_data->window.getSize().y - this->road.getGlobalBounds().height) / 2);
+
+	this->level1 = new Level(50.f, _data);
+	this->level1->init(GAME_BACKGROUND_FILEPATH, ROAD_FILEPATH, this->_data->window);
 }
 
 void GameState::initSystems()
@@ -148,11 +148,12 @@ void GameState::initSystems()
 void GameState::initCharacter()
 {
 	int hp = 100;
-	int movspeed = 2.f;
+	int movspeed = 2.5f;
 	int scaleX = 0.5f;
 	int scaleY = 0.5f;
 	this->character = new Frog(movspeed, 0.5f, 0.5f, hp, hp);
 	this->character->makeChar();
+	this->character->setPosition(this->_data->window.getSize().x / 2 - this->character->getBounds().width, this->_data->window.getSize().y);
 
 }
 
@@ -182,7 +183,7 @@ void GameState::updateInput()
 void GameState::updateEnemies()
 {
 	//Spawning
-	this->spawnTimer += 0.5f;
+	this->spawnTimer += 0.5f; // zmiana dla leveli
 	if (this->spawnTimer >= this->spawnTimerMax)
 	{
 		this->enemies.push_back(new Enemy(0, rand() % this->_data->window.getSize().y - 20.f));
@@ -284,5 +285,5 @@ void GameState::renderGUI()
 
 void GameState::renderBackground()
 {
-	this->_data->window.draw(this->worldBackground);
+	this->level1->render(this->_data->window);
 }

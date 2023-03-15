@@ -5,39 +5,17 @@
 
 #define SPLASH_STATE_SHOW_TIME 0.0
 
-#define SPLASH_SCENE_BACKGROUND_FILEPATH "Resources/res/Splash Background.png"
-#define MAIN_MENU_BACKGROUND_FILEPATH "Resources/res/sky.png"
-#define GAME_BACKGROUND_FILEPATH "Resources/res/sky.png"
+#define PIXEL_FONT "Resources/fonts/PixellettersFull.ttf"
+#define DOSIS_FONT "Resources/fonts/Dosis-Light.ttf"
+
+#define SPLASH_SCREEN "Resources/res/bajana_games.png"
+#define MAIN_MENU_BACKGROUND_FILEPATH "Resources/res/grass.jpg"
+#define GAME_BACKGROUND_FILEPATH "Resources/res/grass3.jpg"
+#define ROAD_FILEPATH "Resources/res/road.jpg"
 #define GAME_OVER_BACKGROUND_FILEPATH "Resources/res/sky.png"
 
 #define GAME_TITLE_FILEPATH "Resources/res/title.png"
 #define PLAY_BUTTON_FILEPATH "Resources/res/PlayButton.png"
-
-#define PIPE_UP_FILEPATH "Resources/res/PipeUp.png"
-#define PIPE_DOWN_FILEPATH "Resources/res/PipeDown.png"
-
-#define LAND_FILEPATH "Resources/res/land.png"
-
-#define BIRD_FRAME_1_FILEPATH "Resources/res/bird-01.png"
-#define BIRD_FRAME_2_FILEPATH "Resources/res/bird-02.png"
-#define BIRD_FRAME_3_FILEPATH "Resources/res/bird-03.png"
-#define BIRD_FRAME_4_FILEPATH "Resources/res/bird-04.png"
-
-#define SCORING_PIPE_FILEPATH "Resources/res/InvisibleScoringPipe.png"
-
-#define FLAPPY_FONT_FILEPATH "Resources/fonts/FlappyFont.ttf"
-
-#define GAME_OVER_TITLE_FILEPATH "Resources/res/Game-Over-Title.png"
-#define GAME_OVER_BODY_FILEPATH "Resources/res/Game-Over-Body.png"
-
-#define BRONZE_MEDAL_FILEPATH "Resources/res/Bronze-Medal.png"
-#define SILVER_MEDAL_FILEPATH "Resources/res/Silver-Medal.png"
-#define GOLD_MEDAL_FILEPATH "Resources/res/Gold-Medal.png"
-#define PLATINUM_MEDAL_FILEPATH "Resources/res/Platinum-Medal.png"
-
-#define HIT_SOUND_FILEPATH "Resources/audio/Hit.wav"
-#define POINT_SOUND_FILEPATH "Resources/audio/Point.wav"
-#define WING_SOUND_FILEPATH "Resources/audio/Wing.wav"
 
 #define PIPE_MOVEMENT_SPEED 200.0f
 #define PIPE_SPAWN_FREQUENCY 1.5f

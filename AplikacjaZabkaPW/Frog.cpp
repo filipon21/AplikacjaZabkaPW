@@ -10,7 +10,7 @@ Frog::~Frog()
 
 void Frog::initTexture()
 {
-    if (!this->texture.loadFromFile("Textures/frog.png"))
+    if (!this->texture.loadFromFile("Resources/res/frog.png"))
         std::cout << "ERROR::PLAYER::INITTEXTURE::Could not load texture file." << "\n";
 }
 
