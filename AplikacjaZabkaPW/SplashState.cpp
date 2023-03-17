@@ -15,9 +15,9 @@
 
 	void SplashState::init()
 	{
-		this->_data->assets.loadTexture("Splash State Background", SPLASH_SCENE_BACKGROUND_FILEPATH);
+		this->_data->assets.loadTexture("splash_background", SPLASH_SCREEN);
 
-		_background.setTexture(this->_data->assets.getTexture("Splash State Background"));
+		this->_background.setTexture(this->_data->assets.getTexture("splash_background"));
 	}
 
 	void SplashState::handleInput()
@@ -38,7 +38,7 @@
 		if (this->_clock.getElapsedTime().asSeconds() > SPLASH_STATE_SHOW_TIME)
 		{
 			// Switch To Main Menu
-			this->_data->machine.AddState(StateRef(new MainMenuState(_data)), true);
+			this->_data->machine.addState(StateRef(new MainMenuState(_data)), true);
 		}
 	}
 
