@@ -7,7 +7,9 @@ Level::Level(float timeLimit, GameDataRef data) : _data(data)
 
 void Level::init(const char* backgroundFilePath, const char* roadFilePath, sf::RenderTarget& target)
 {
-	
+	this->_data->assets.loadTexture("game_background", GAME_BACKGROUND_FILEPATH);
+
+	this->worldBackground.setTexture(this->_data->assets.getTexture("game_background"));
 
 	this->_data->assets.loadTexture("road", ROAD_FILEPATH);
 
