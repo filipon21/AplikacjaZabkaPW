@@ -7,7 +7,7 @@ class Level
 {
 	GameDataRef _data;
 
-	float timeLimit; // czas, który gracz ma na przejœcie poziomu (60 sekund)
+	const float timeLimit; // czas, który gracz ma na przejœcie poziomu (60 sekund)
 	float timeRemaining; // pozosta³y czas do koñca poziomu
 
 	//Background texture
@@ -24,6 +24,12 @@ public:
 	void init(const char* backgroundFilePath, const char* roadFilePath, sf::RenderTarget& target);
 
 	void render(sf::RenderTarget& target);
+
+	void setTimeRemaining(float time);
+
+	float getTimeLimit();
+
+	sf::Sprite getRoad();
 
 };
 

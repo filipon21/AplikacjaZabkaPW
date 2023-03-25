@@ -1,4 +1,5 @@
 #include "StateMachine.h"
+#include <iostream>
 
 void StateMachine::addState(StateRef newState, bool isReplacing)
 {
@@ -17,6 +18,7 @@ void StateMachine::processStateChanges()
 {
 	if (this->_isRemoving && !this->_states.empty())
 	{
+
 		this->_states.pop();
 
 		if (!this->_states.empty())

@@ -3,6 +3,7 @@
 #include <sstream>
 #include "DEFINITIONS.h"
 #include "GameState.h"
+#include "GameOverState.h"
 #include "Level.h"
 #include <iostream>
 
@@ -62,6 +63,7 @@ void GameState::update(float dt)
 	this->updateEnemies();
 	this->updateCollision();
 
+	this->updateTime();
 
 	this->updateGUI();
 }
@@ -86,13 +88,19 @@ void GameState::draw(float dt)
 	this->renderGUI();
 
 	//Game over screen
-	if (this->character->getHp() <= 0)
+	if (this->character->getHp() <= 0 || this->timeRemaining <= 0)
 	{
-		this->_data->window.draw(this->gameOverText);
+		std::cout << "Go To Game Over screen" << std::endl;
+		this->_data->machine.addState(StateRef(new GameOverState(_data)), false);
 	}
 
 	//Display all objects
 	this->_data->window.display(); // -> bo jest to wskaŸnik i chcemy siê dostaæ do konkretnej kalsy pochodnej (polimorfizm); dynamicznie
+}
+
+void GameState::resume()
+{
+	this->init();
 }
 
 void GameState::initGUI()
@@ -108,13 +116,10 @@ void GameState::initGUI()
 	this->levelText.setCharacterSize(30);
 	this->levelText.setFillColor(sf::Color::White);
 
-	//Init gameover text
-	this->gameOverText.setFont(this->font);
-	this->gameOverText.setCharacterSize(60);
-	this->gameOverText.setFillColor(sf::Color::Red);
-	this->gameOverText.setString("Game over!");
-	this->gameOverText.setPosition(this->_data->window.getSize().x / 2.f - this->gameOverText.getGlobalBounds().width / 2.f,
-		this->_data->window.getSize().y / 2.f - this->gameOverText.getGlobalBounds().height / 2.f);
+	//Init time text
+	this->timeText.setFont(this->font);
+	this->timeText.setCharacterSize(30);
+	this->timeText.setFillColor(sf::Color::White);
 
 	//init player GUI
 	this->characterHpBar.setSize(sf::Vector2f(300.f, 25.f));
@@ -142,12 +147,16 @@ void GameState::initBackground()
 
 void GameState::initSystems()
 {
+
 	this->level = 0;
+
+	this->timeRemaining = this->level1->getTimeLimit();
+
 }
 
 void GameState::initCharacter()
 {
-	int hp = 100;
+	int hp = 10;
 	int movspeed = 2.5f;
 	int scaleX = 0.5f;
 	int scaleY = 0.5f;
@@ -186,7 +195,7 @@ void GameState::updateEnemies()
 	this->spawnTimer += 0.5f; // zmiana dla leveli
 	if (this->spawnTimer >= this->spawnTimerMax)
 	{
-		this->enemies.push_back(new Enemy(0, rand() % this->_data->window.getSize().y - 20.f));
+		this->enemies.push_back(new Enemy(0, rand() % static_cast<int>(this->level1->getRoad().getGlobalBounds().height - this->level1->getRoad().getGlobalBounds().top)));
 		this->spawnTimer = 0.f;
 	}
 
@@ -271,6 +280,9 @@ void GameState::updateGUI()
 	ss << "Level: " << this->level;
 	this->levelText.setString(ss.str());
 
+	ss << "     Pozostaly czas: " << static_cast<int>(this->timeRemaining);
+	this->levelText.setString(ss.str());
+
 	//Update player GUI
 	float hpPercent = static_cast<float>(this->character->getHp()) / this->character->getHpMax();
 	this->characterHpBar.setSize(sf::Vector2f(300.f * hpPercent, this->characterHpBar.getSize().y));
@@ -279,8 +291,16 @@ void GameState::updateGUI()
 void GameState::renderGUI()
 {
 	this->_data->window.draw(this->levelText);
+	this->_data->window.draw(this->timeText);
 	this->_data->window.draw(this->characterHpBarBack);
 	this->_data->window.draw(this->characterHpBar);
+}
+
+void GameState::updateTime()
+{
+	float dt = this->clock.restart().asSeconds();
+	this->timeRemaining -= dt;	
+	std::cout << timeRemaining << std::endl;
 }
 
 void GameState::renderBackground()

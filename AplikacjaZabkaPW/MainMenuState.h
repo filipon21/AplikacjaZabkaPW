@@ -20,6 +20,10 @@
 		GameDataRef _data;
 
 		sf::Sprite _background;
-		sf::Sprite _title;
+		//sf::Sprite _title;
+		sf::Text _title;
 		sf::Sprite _playButton;
+		sf::Sprite _charSelectorButton;
+		sf::Sprite _optionsButton;
+		sf::Sprite _exitButton;
 	};

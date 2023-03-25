@@ -1,7 +1,7 @@
 #include "Level.h"
 #include "DEFINITIONS.h"
 
-Level::Level(float timeLimit, GameDataRef data) : _data(data)
+Level::Level(float timeLimit, GameDataRef data) : _data(data), timeLimit(timeLimit)
 {
 }
 
@@ -21,4 +21,20 @@ void Level::render(sf::RenderTarget& target)
 {
 	target.draw(this->worldBackground);
 	target.draw(this->road);
+}
+
+void Level::setTimeRemaining(float time)
+{
+	this->timeRemaining = time;
+}
+
+float Level::getTimeLimit()
+{
+	return this->timeLimit;
+}
+
+
+sf::Sprite Level::getRoad()
+{
+	return this->road;
 }

@@ -25,18 +25,24 @@
     <Filter Include="Pliki źródłowe\GUI">
       <UniqueIdentifier>{51755729-97cb-45df-8a08-0d4a9e8223f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pliki nagłówkowe\States">
+      <UniqueIdentifier>{9af944b5-917d-4047-ac81-aa4acf7e1700}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Engine">
+      <UniqueIdentifier>{c545ecdb-410e-4a72-b896-0c872d5c77fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Engine">
+      <UniqueIdentifier>{c9b2f31c-296c-49bc-926d-97e81e4a82f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\States">
+      <UniqueIdentifier>{aa07099c-1000-473e-a50e-fd7a67e72b6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AplikacjaZabkaPW.cpp">
-      <Filter>Pliki źródłowe\Game</Filter>
-    </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>Pliki źródłowe\Game</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Pliki źródłowe\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="GameState.cpp">
       <Filter>Pliki źródłowe\Game</Filter>
     </ClCompile>
     <ClCompile Include="Frog.cpp">
@@ -45,40 +51,46 @@
     <ClCompile Include="Vehicle.cpp">
       <Filter>Pliki źródłowe\Game</Filter>
     </ClCompile>
-    <ClCompile Include="StateMachine.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="AssetManager.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="SplashState.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenuState.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="GameOverState.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuOptionsState.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\Engine</Filter>
     </ClCompile>
     <ClCompile Include="FileManager.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverState.cpp">
+      <Filter>Pliki źródłowe\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePauseState.cpp">
+      <Filter>Pliki źródłowe\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Pliki źródłowe\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Pliki źródłowe\States</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>Pliki źródłowe\States</Filter>
     </ClCompile>
     <ClCompile Include="MenuCharacterSelectorState.cpp">
+      <Filter>Pliki źródłowe\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Pliki źródłowe\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Pliki źródłowe\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Pliki źródłowe\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SplashState.cpp">
+      <Filter>Pliki źródłowe\States</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>Pliki źródłowe\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="AplikacjaZabkaPW.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,53 +104,53 @@
     <ClInclude Include="Frog.h">
       <Filter>Pliki nagłówkowe\Game</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Pliki nagłówkowe\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Vehicle.h">
       <Filter>Pliki nagłówkowe\Game</Filter>
     </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>Pliki nagłówkowe\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="StateMachine.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Definitions.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="AssetManager.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="SplashState.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenuState.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="GameOverState.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuOptionsState.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>Pliki nagłówkowe\Engine</Filter>
     </ClInclude>
     <ClInclude Include="FileManager.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>Pliki nagłówkowe\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Pliki nagłówkowe\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>Pliki nagłówkowe\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Pliki nagłówkowe\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Pliki nagłówkowe\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverState.h">
+      <Filter>Pliki nagłówkowe\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePauseState.h">
+      <Filter>Pliki nagłówkowe\States</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuState.h">
+      <Filter>Pliki nagłówkowe\States</Filter>
     </ClInclude>
     <ClInclude Include="MenuCharacterSelectorState.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>Pliki nagłówkowe\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Definitions.h">
+      <Filter>Pliki nagłówkowe\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="SplashState.h">
+      <Filter>Pliki nagłówkowe\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Pliki nagłówkowe\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Pliki nagłówkowe\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Pliki nagłówkowe\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

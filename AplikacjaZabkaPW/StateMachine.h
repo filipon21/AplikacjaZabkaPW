@@ -4,6 +4,7 @@
 #include <stack>
 #include "State.h"
 
+// definition of type for unique pointer to State
 typedef std::unique_ptr<State> StateRef;
 
 /**
@@ -43,9 +44,10 @@ public:
 	StateRef& getActiveState();
 
 private:
+	// stack of pointers to states
 	std::stack<StateRef> _states;
 	StateRef _newState;
 
-	bool _isRemoving;
-	bool _isAdding, _isReplacing;
+	// booleans for processing changes and they show what we want to do
+	bool _isRemoving, _isAdding, _isReplacing;
 };

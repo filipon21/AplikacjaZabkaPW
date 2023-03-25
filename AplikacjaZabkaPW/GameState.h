@@ -26,6 +26,7 @@ public:
 	void handleInput();
 	void update(float dt);
 	void draw(float dt);
+	void resume();
 
 private:
 	GameDataRef _data;
@@ -34,11 +35,13 @@ private:
 	sf::Font font;
 	sf::Text levelText;
 
-	sf::Text gameOverText;
+	sf::Text timeText;
 
 	//Systems
 	Level* level1;
 	unsigned level;
+	sf::Clock clock; // utworzenie obiektu klasy Clock
+	float timeRemaining;
 
 	//Background texture
 	sf::Sprite worldBackground;
@@ -101,6 +104,7 @@ private:
 
 	void updateGUI();
 	void renderGUI();
+	void updateTime();
 
 	void renderBackground();
 };
