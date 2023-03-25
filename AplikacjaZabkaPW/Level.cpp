@@ -1,19 +1,16 @@
 #include "Level.h"
-#include "DEFINITIONS.h"
 
-Level::Level(float timeLimit, GameDataRef data) : _data(data), timeLimit(timeLimit)
+Level::Level(float timeLimit, float spawnTime,GameDataRef data) : _data(data), timeLimit(timeLimit), spawnTime(spawnTime)
 {
 }
 
-void Level::init(const char* backgroundFilePath, const char* roadFilePath, sf::RenderTarget& target)
+void Level::init(int level, sf::RenderTarget& target, std::string backgroundName, std::string roadName)
 {
-	this->_data->assets.loadTexture("game_background", GAME_BACKGROUND_FILEPATH);
 
-	this->worldBackground.setTexture(this->_data->assets.getTexture("game_background"));
+	this->worldBackground.setTexture(this->_data->assets.getTexture(std::move(backgroundName)));
 
-	this->_data->assets.loadTexture("road", ROAD_FILEPATH);
 
-	this->road.setTexture(this->_data->assets.getTexture("road"));
+	this->road.setTexture(this->_data->assets.getTexture(std::move(roadName)));
 	this->road.setPosition(0.f, (this->_data->window.getSize().y - this->road.getGlobalBounds().height) / 2);
 }
 
@@ -37,4 +34,14 @@ float Level::getTimeLimit()
 sf::Sprite Level::getRoad()
 {
 	return this->road;
+}
+
+
+float Level::getSpawnTime()
+{
+	return this->spawnTime;
+}
+std::string Level::getBackgroundFilePath(int level)
+{
+	return this->levelsData[level].backgroundFilePath;
 }

@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <vector>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
@@ -39,18 +40,11 @@ private:
 
 	//Systems
 	Level* level1;
-	unsigned level;
+	unsigned currentLevel;
 	sf::Clock clock; // utworzenie obiektu klasy Clock
 	float timeRemaining;
 
-	//Background texture
-	sf::Sprite worldBackground;
-
-	//Street texture
-	sf::Sprite road;
-
-	//Event
-	sf::Event ev; //zmienna do ³apania eventów np. klikania przyciskow
+	std::vector<Level *> levels;
 
 	// Character
 	Character* character;

@@ -111,7 +111,7 @@ void GameState::initGUI()
 		std::cout << "ERROR::GAME::Failed to load font" << "\n";
 	}
 
-	//Init level text
+	//Init currentLevel text
 	this->levelText.setFont(this->font);
 	this->levelText.setCharacterSize(30);
 	this->levelText.setFillColor(sf::Color::White);
@@ -132,23 +132,23 @@ void GameState::initGUI()
 
 void GameState::initBackground()
 {
-	//this->_data->assets.loadTexture("game_background", GAME_BACKGROUND_FILEPATH);
+	this->_data->assets.loadTexture("Game background", GAME_BACKGROUND_FILEPATH);
+	this->_data->assets.loadTexture("Game background 2", GAME_OVER_BACKGROUND_FILEPATH);
+	this->_data->assets.loadTexture("road", ROAD_FILEPATH);
 
-	//this->worldBackground.setTexture(this->_data->assets.getTexture("game_background"));
+	this->levels.push_back(new Level(70.f, 1.f, _data));
+	this->levels.push_back(new Level(80.f, 1.5f, _data));
 
-	//this->_data->assets.loadTexture("road", ROAD_FILEPATH);
+	//this->levels.push_back(*new Level(50.f, _data));
+	this->level1 = new Level(50.f, 0.5f, _data);
+	this->level1->init(1, this->_data->window, "Game background", "road");
 
-	//this->road.setTexture(this->_data->assets.getTexture("road"));
-	//this->road.setPosition(0.f, (this->_data->window.getSize().y - this->road.getGlobalBounds().height) / 2);
-
-	this->level1 = new Level(50.f, _data);
-	this->level1->init(GAME_BACKGROUND_FILEPATH, ROAD_FILEPATH, this->_data->window);
 }
 
 void GameState::initSystems()
 {
 
-	this->level = 0;
+	this->currentLevel = 0;
 
 	this->timeRemaining = this->level1->getTimeLimit();
 
@@ -192,7 +192,7 @@ void GameState::updateInput()
 void GameState::updateEnemies()
 {
 	//Spawning
-	this->spawnTimer += 0.5f; // zmiana dla leveli
+	this->spawnTimer += this->level1->getSpawnTime(); // zmiana dla leveli
 	if (this->spawnTimer >= this->spawnTimerMax)
 	{
 		this->enemies.push_back(new Enemy(0, rand() % static_cast<int>(this->level1->getRoad().getGlobalBounds().height - this->level1->getRoad().getGlobalBounds().top)));
@@ -264,7 +264,26 @@ void GameState::updateCollision()
 		/*this->character->setPosition(this->character->getBounds().left, 0.f);*/
 
 		this->character->setPosition(this->_data->window.getSize().x / 2, this->_data->window.getSize().y);
-		this->level += 1;
+		this->currentLevel += 1;
+
+		if (currentLevel - 1 >= levels.size()) {
+			std::cout << "Indeks " << currentLevel << " jest poza zakresem wektora.\n";
+		}
+
+		// Zmiany dla nowego levela
+		else {
+			auto it = levels.begin() + currentLevel - 1;
+			this->level1 = *this->levels.erase(it);
+			this->level1->init(1, this->_data->window, 
+				this->level1->getBackgroundFilePath(currentLevel - 1), "road");
+
+			// Reset zegara dla danego levela
+			timeRemaining = this->level1->getTimeLimit();
+
+			this->character->setHp(this->character->getHpMax());
+
+			std::cout << this->level1->getBackgroundFilePath(currentLevel - 1);
+		}
 	}
 
 	//bottom world collision
@@ -277,7 +296,7 @@ void GameState::updateCollision()
 void GameState::updateGUI()
 {
 	std::stringstream ss;
-	ss << "Level: " << this->level;
+	ss << "Level: " << this->currentLevel;
 	this->levelText.setString(ss.str());
 
 	ss << "     Pozostaly czas: " << static_cast<int>(this->timeRemaining);
@@ -300,7 +319,6 @@ void GameState::updateTime()
 {
 	float dt = this->clock.restart().asSeconds();
 	this->timeRemaining -= dt;	
-	std::cout << timeRemaining << std::endl;
 }
 
 void GameState::renderBackground()
