@@ -28,6 +28,7 @@ class Level
 
 	// Wektor przechowuj¹cy dane dla ró¿nych poziomów
 	std::vector<LevelData> levelsData = {
+		{ 30.f, 50.f, "Game background" }, // poziom 1 - 5 przeciwników, prêdkoœæ 100, t³o "level1_background.png"
 		{ 20.f, 100.f, "Game background 2" }, // poziom 1 - 5 przeciwników, prêdkoœæ 100, t³o "level1_background.png"
 		{ 20.f, 150.f, "Game background 3" }, // poziom 2 - 10 przeciwników, prêdkoœæ 150, t³o "level2_background.png"
 		{ 20.f, 200.f, "Game background 4"}, 

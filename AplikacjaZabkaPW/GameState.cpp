@@ -163,8 +163,8 @@ void GameState::initBackground()
 	std::cout <<levels.size() << std::endl;
 	//this->levels.push_back(*new Level(50.f, _data));
 	this->level = new Level(31.f, 0.5f, _data);
-	this->level->init(1, this->_data->window, "Game background", "road");
-
+	this->level->init(1, this->_data->window,
+		this->level->getBackgroundFilePath(0), "road");
 }
 
 void GameState::initSystems()
@@ -301,7 +301,7 @@ void GameState::updateCollision()
 				this->character->setHp(std::min(this->character->getHp() + 10, this->character->getHpMax()));
 			}
 
-			std::cout << this->level->getBackgroundFilePath(currentLevel - 2) <<std::endl;
+			std::cout << this->level->getBackgroundFilePath(currentLevel - 1) <<std::endl;
 		}
 	}
 
@@ -314,12 +314,19 @@ void GameState::updateCollision()
 
 void GameState::changeLevel()
 {
-	this->level = levels[currentLevel - 2];
-	std::cout << "time w level ";
-	std::cout << levels[currentLevel - 2]->getTimeLimit();
+	if (currentLevel - 1 >= 0 && currentLevel - 1 < levels.size()) {
+		this->level = levels[currentLevel - 1];
+		std::cout << "time w level ";
+		std::cout << levels[currentLevel - 1]->getTimeLimit();
+		this->level->init(1, this->_data->window,
+			this->level->getBackgroundFilePath(currentLevel - 1), "road");
+	}
+	else {
+		this->level = levels[0];
+		this->level->init(1, this->_data->window,
+			this->level->getBackgroundFilePath(0), "road");
+	}
 
-	this->level->init(1, this->_data->window,
-		this->level->getBackgroundFilePath(currentLevel - 2), "road");
 	// Reset zegara dla danego levela
 	this->timeRemaining = this->level->getTimeLimit();
 }
