@@ -3,22 +3,22 @@
 #include "InputManager.h"
 
 
-	bool InputManager::IsSpriteClicked(sf::Sprite object, sf::Mouse::Button button, sf::RenderWindow& window)
+	bool InputManager::isSpriteClicked(sf::Sprite object, sf::Mouse::Button button, sf::RenderWindow& window)
 	{
-		if (sf::Mouse::isButtonPressed(button))
-		{
-			sf::IntRect playButtonRect(object.getPosition().x, object.getPosition().y, object.getGlobalBounds().width, object.getGlobalBounds().height);
-
-			if (playButtonRect.contains(sf::Mouse::getPosition(window)))
-			{
-				return true;
-			}
-		}
-
-		return false;
+		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+		sf::Vector2f mousePosFloat = window.mapPixelToCoords(mousePos);
+		return sf::Mouse::isButtonPressed(button) &&
+			object.getGlobalBounds().contains(mousePosFloat);
 	}
 
-	sf::Vector2i InputManager::GetMousePosition(sf::RenderWindow& window)
+	bool InputManager::isMouseCursorOnSprite(sf::Sprite object, sf::RenderWindow& window)
+	{
+		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+		sf::Vector2f mousePosFloat = window.mapPixelToCoords(mousePos);
+		return object.getGlobalBounds().contains(mousePosFloat);
+	}
+
+	sf::Vector2i InputManager::getMousePosition(sf::RenderWindow& window)
 	{
 		return sf::Mouse::getPosition(window);
 	}

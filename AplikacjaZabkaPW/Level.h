@@ -2,13 +2,15 @@
 
 #include <SFML/Graphics.hpp>
 #include "Game.h"
+#include "Definitions.h"
 
 class Level
 {
 	GameDataRef _data;
 
-	float timeLimit; // czas, który gracz ma na przejœcie poziomu (60 sekund)
+	const float timeLimit; // czas, który gracz ma na przejœcie poziomu (60 sekund)
 	float timeRemaining; // pozosta³y czas do koñca poziomu
+	float spawnTime; // pozosta³y czas do koñca poziomu
 
 	//Background texture
 	sf::Sprite worldBackground;
@@ -16,14 +18,40 @@ class Level
 	//Street texture
 	sf::Sprite road;
 
-	//zmiana spawnowania enemies i ich szybkosc?
+
+		// Dane dla ró¿nych poziomów
+	struct LevelData {
+		float timeLimit;
+		float spawnTime;
+		std::string backgroundFilePath;
+	};
+
+	// Wektor przechowuj¹cy dane dla ró¿nych poziomów
+	std::vector<LevelData> levelsData = {
+		{ 20.f, 100.f, "Game background 2" }, // poziom 1 - 5 przeciwników, prêdkoœæ 100, t³o "level1_background.png"
+		{ 20.f, 150.f, "Game background 3" }, // poziom 2 - 10 przeciwników, prêdkoœæ 150, t³o "level2_background.png"
+		{ 20.f, 200.f, "Game background 4"}, 
+		{ 20.f, 200.f, "Game background 5"} 
+	};
 
 public:
-	Level(float timeLimit, GameDataRef data);
+	Level(float timeLimit, float spawnTime,GameDataRef data);
 
-	void init(const char* backgroundFilePath, const char* roadFilePath, sf::RenderTarget& target);
+	void init(int level, sf::RenderTarget& target, std::string backgroundName, std::string roadName);
 
 	void render(sf::RenderTarget& target);
 
+	void setTimeRemaining(float time);
+
+	float getTimeLimit();
+
+
+	sf::Sprite getRoad();
+
+	// Metody zwracaj¹ce dane dla danego poziomu
+	int getEnemyCount(int level);
+	float getEnemySpeed(int level);
+	float getSpawnTime();
+	std::string getBackgroundFilePath(int level);
 };
 

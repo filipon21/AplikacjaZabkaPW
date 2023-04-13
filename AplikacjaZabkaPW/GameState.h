@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <vector>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
@@ -10,6 +11,12 @@
 #include "Enemy.h"
 #include "Game.h"
 #include "Level.h"
+
+struct GameStateData
+{
+	Character* character;
+	Level level;
+};
 
 /*
 * Class that acts as the game engine.
@@ -26,6 +33,7 @@ public:
 	void handleInput();
 	void update(float dt);
 	void draw(float dt);
+	void resume();
 
 private:
 	GameDataRef _data;
@@ -34,20 +42,15 @@ private:
 	sf::Font font;
 	sf::Text levelText;
 
-	sf::Text gameOverText;
+	sf::Text timeText;
 
 	//Systems
-	Level* level1;
-	unsigned level;
+	Level* level;
+	unsigned currentLevel;
+	sf::Clock clock; // utworzenie obiektu klasy Clock
+	float timeRemaining;
 
-	//Background texture
-	sf::Sprite worldBackground;
-
-	//Street texture
-	sf::Sprite road;
-
-	//Event
-	sf::Event ev; //zmienna do ³apania eventów np. klikania przyciskow
+	std::vector<Level *> levels;
 
 	// Character
 	Character* character;
@@ -97,10 +100,12 @@ private:
 	void updateCombat();
 
 	void updateCollision();
+	void changeLevel();
 
 
 	void updateGUI();
 	void renderGUI();
+	void updateTime();
 
 	void renderBackground();
 };

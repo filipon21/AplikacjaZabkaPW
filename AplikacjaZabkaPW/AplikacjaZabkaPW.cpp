@@ -9,7 +9,7 @@
 
 int main()
 {
-	Game(SCREEN_WIDTH, SCREEN_HEIGHT, "Flappy Bird");
+	Game(SCREEN_WIDTH, SCREEN_HEIGHT, "Zabka uliczna");
 
 	return EXIT_SUCCESS;
 }
