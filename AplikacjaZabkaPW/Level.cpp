@@ -1,6 +1,6 @@
 #include "Level.h"
 
-Level::Level(float timeLimit, float spawnTime,GameDataRef data) : _data(data), timeLimit(timeLimit), spawnTime(spawnTime)
+Level::Level(float timeLimit, float spawnTime,GameDataRef data) : timeLimit(timeLimit), spawnTime(spawnTime), _data(data)
 {
 }
 

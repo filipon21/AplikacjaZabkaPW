@@ -6,6 +6,7 @@
 class State
 {
 public:
+	virtual ~State() = default;
 	/**
 	 * Method for initialize variables and load all required fonts
 	 */

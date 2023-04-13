@@ -12,6 +12,12 @@
 #include "Game.h"
 #include "Level.h"
 
+struct GameStateData
+{
+	Character* character;
+	Level level;
+};
+
 /*
 * Class that acts as the game engine.
 * Wrapper class.
@@ -39,7 +45,7 @@ private:
 	sf::Text timeText;
 
 	//Systems
-	Level* level1;
+	Level* level;
 	unsigned currentLevel;
 	sf::Clock clock; // utworzenie obiektu klasy Clock
 	float timeRemaining;
@@ -94,6 +100,7 @@ private:
 	void updateCombat();
 
 	void updateCollision();
+	void changeLevel();
 
 
 	void updateGUI();
