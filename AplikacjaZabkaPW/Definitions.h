@@ -20,6 +20,8 @@
 #define GAME_TITLE_FILEPATH "Resources/res/title.png"
 #define PLAY_BUTTON_FILEPATH "Resources/res/graj.png"
 #define EXIT_BUTTON_FILEPATH "Resources/res/wyjdz.png"
+#define NEW_SAVE_BUTTON_FILEPATH "Resources/res/nowy_zapis.png"
+#define SAVE_BUTTON_FILEPATH "Resources/res/zapisz_gre.png"
 #define RETURN_TO_MENU_BUTTON_FILEPATH "Resources/res/wroc_do_menu.png"
 #define NEW_GAME_BUTTON_FILEPATH "Resources/res/nowa_gra.png"
 #define RETURN_TO_GAME_BUTTON_FILEPATH "Resources/res/wroc_do_gry.png"

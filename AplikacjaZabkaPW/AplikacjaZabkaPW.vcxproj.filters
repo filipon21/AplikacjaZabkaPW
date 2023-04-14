@@ -16,14 +16,8 @@
     <Filter Include="Pliki nagłówkowe\Game">
       <UniqueIdentifier>{223c891e-fa27-4a67-a13e-e0f39d721bdf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Pliki nagłówkowe\GUI">
-      <UniqueIdentifier>{82a2c2e2-1523-4401-9573-bd493dd2dcfb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Pliki źródłowe\Game">
       <UniqueIdentifier>{4c6c53ff-f7d6-48fd-9e67-0cfcdca57025}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Pliki źródłowe\GUI">
-      <UniqueIdentifier>{51755729-97cb-45df-8a08-0d4a9e8223f3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Pliki nagłówkowe\States">
       <UniqueIdentifier>{9af944b5-917d-4047-ac81-aa4acf7e1700}</UniqueIdentifier>
@@ -102,6 +96,12 @@
     <ClCompile Include="CurrentGameData.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="GameLoadState.cpp">
+      <Filter>Pliki źródłowe\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSaveState.cpp">
+      <Filter>Pliki źródłowe\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -169,6 +169,12 @@
     </ClInclude>
     <ClInclude Include="CurrentGameData.h">
       <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLoadState.h">
+      <Filter>Pliki nagłówkowe\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSaveState.h">
+      <Filter>Pliki nagłówkowe\States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

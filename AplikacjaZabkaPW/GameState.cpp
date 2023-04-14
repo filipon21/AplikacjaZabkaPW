@@ -27,7 +27,6 @@ GameState::~GameState() {
 
 void GameState::init()
 {
-	//this->_data->window.setFramerateLimit(144); //TODO zmiana w mnenu
 	this->initCharacter();
 	this->initEnemies();
 	this->initBackground();
@@ -53,7 +52,7 @@ void GameState::handleInput()
 			}
 			if (ev.key.code == sf::Keyboard::Escape)
 			{
-				this->_data->machine.addState(StateRef(new GamePauseState(_data)), false);
+				this->_data->machine.addState(StateRef(new GamePauseState(_data, level)), false);
 			}
 			break;
 		default:

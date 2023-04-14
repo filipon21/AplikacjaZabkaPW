@@ -1,12 +1,13 @@
 #pragma once
 #include "State.h"
 #include "Game.h"
+#include "Level.h"
 
 class GamePauseState :
     public State
 {
 public:
-    GamePauseState(GameDataRef data);
+    GamePauseState(GameDataRef data, Level* level);
 
     // Inherited via State
     void init() override;
@@ -16,9 +17,11 @@ public:
 
 private:
     GameDataRef _data;
+    Level _level;
 
     sf::Sprite _background;
     sf::Sprite _playButton;
+    sf::Sprite _saveButton;
     sf::Sprite _newGameButton;
     sf::Sprite _menuButton;
 

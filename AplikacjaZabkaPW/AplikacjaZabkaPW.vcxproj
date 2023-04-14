@@ -141,8 +141,10 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="Frog.cpp" />
+    <ClCompile Include="GameLoadState.cpp" />
     <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="GamePauseState.cpp" />
+    <ClCompile Include="GameSaveState.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -164,8 +166,10 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="Frog.h" />
+    <ClInclude Include="GameLoadState.h" />
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="GamePauseState.h" />
+    <ClInclude Include="GameSaveState.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputManager.h" />
