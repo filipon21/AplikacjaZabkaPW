@@ -4,7 +4,7 @@ Level::Level(float timeLimit, float spawnTime,GameDataRef data) : timeLimit(time
 {
 }
 
-void Level::init(int level, sf::RenderTarget& target, std::string backgroundName, std::string roadName)
+void Level::init(int level, std::string backgroundName, std::string roadName)
 {
 
 	this->worldBackground.setTexture(this->_data->assets.getTexture(std::move(backgroundName)));

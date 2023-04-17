@@ -1,11 +1,6 @@
 #pragma once //#pragma once pozwala na includowanie pliku do woli :)
 
-#include <iostream>
-#include <sstream>
 #include <vector>
-#include <SFML/Window.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
 #include "Character.h"
 #include "Frog.h"
 #include "Enemy.h"
@@ -39,26 +34,29 @@ private:
 	GameDataRef _data;
 
 	//GUI
-	sf::Font font;
-	sf::Text levelText;
+	sf::Font _font;
+	sf::Text _levelText;
 
-	sf::Text timeText;
+	sf::Text _timeText;
 
 	//Systems
-	Level* level;
-	unsigned currentLevel;
-	sf::Clock clock; // utworzenie obiektu klasy Clock
-	float timeRemaining;
+	Level* _level;
+	unsigned _currentLevel;
+	sf::Clock _clock; // utworzenie obiektu klasy Clock
+	float _timeRemaining;
 
-	std::vector<Level *> levels;
+	std::vector<Level*> _levels;
 
 	// Character
-	Character* character;
+	Character* _character;
 
 	// Enemies
-	float spawnTimer;
-	float spawnTimerMax;
-	std::vector<Enemy*> enemies;
+	float _spawnTimer;
+	float _spawnTimerMax;
+	std::vector<Enemy*> _enemies;
+	bool _ifTimeUpdate;
+	sf::Time _clockElapsedTime;
+	sf::Time _pauseTime;
 
 	void initGUI();
 	void initBackground();

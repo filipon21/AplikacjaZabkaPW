@@ -7,9 +7,9 @@
 #include "GameState.h"
 #include "MainMenuState.h"
 
-GamePauseState::GamePauseState(GameDataRef data, Level* level) : _data(data), _level(*level)
+GamePauseState::GamePauseState(GameDataRef data, Level* level, std::vector<Enemy*> enemies, Character* character, unsigned currentLevel) :
+_data(data),_level(*level), _enemies(enemies), _currentLevel(currentLevel), _character(character)
 {
-
 }
 
 void GamePauseState::init()
@@ -58,25 +58,25 @@ void GamePauseState::handleInput()
 			this->_data->window.close();
 		}
 
-		if (this->_data->input.isSpriteClicked(this->_playButton, sf::Mouse::Left, this->_data->window))
+		if (this->_data->input.isObjectClicked(this->_playButton, sf::Mouse::Left, this->_data->window))
 		{
 			std::cout << "Go To Game Screen" << std::endl;
 			this->_data->machine.removeState();
 		}
 
-		if (this->_data->input.isSpriteClicked(this->_newGameButton, sf::Mouse::Left, this->_data->window))
+		if (this->_data->input.isObjectClicked(this->_newGameButton, sf::Mouse::Left, this->_data->window))
 		{
 			std::cout << "Go To Game Screen" << std::endl;
 			this->_data->machine.addState(StateRef(new GameState(_data)), true);
 		}
 
-		if (this->_data->input.isSpriteClicked(this->_saveButton, sf::Mouse::Left, this->_data->window))
+		if (this->_data->input.isObjectClicked(this->_saveButton, sf::Mouse::Left, this->_data->window))
 		{
 			std::cout << "Go To save screem" << std::endl;
-			this->_data->machine.addState(StateRef(new GameSaveState(_data, _level)), true);
+			this->_data->machine.addState(StateRef(new GameSaveState(_data, _level, _enemies, _character, _currentLevel)), false);
 		}
 
-		if (this->_data->input.isSpriteClicked(this->_menuButton, sf::Mouse::Left, this->_data->window))
+		if (this->_data->input.isObjectClicked(this->_menuButton, sf::Mouse::Left, this->_data->window))
 		{
 			std::cout << "Return to menu" << std::endl;
 			this->_data->machine.addState(StateRef(new MainMenuState(_data)), true);
@@ -88,25 +88,25 @@ void GamePauseState::update(float dt)
 {
 	sf::Cursor cursor;
 
-	if (this->_data->input.isMouseCursorOnSprite(this->_playButton, this->_data->window))
+	if (this->_data->input.isMouseCursorOnObject(this->_playButton, this->_data->window))
 	{
 		cursor.loadFromSystem(sf::Cursor::Hand);
 		this->_playButton.setColor(sf::Color::Blue);
 		_data->window.setMouseCursor(cursor);
 	}
-	else if (this->_data->input.isMouseCursorOnSprite(this->_newGameButton, this->_data->window))
+	else if (this->_data->input.isMouseCursorOnObject(this->_newGameButton, this->_data->window))
 	{
 		cursor.loadFromSystem(sf::Cursor::Hand);
 		this->_newGameButton.setColor(sf::Color::Green);
 		_data->window.setMouseCursor(cursor);
 	}
-	else if (this->_data->input.isMouseCursorOnSprite(this->_menuButton, this->_data->window))
+	else if (this->_data->input.isMouseCursorOnObject(this->_menuButton, this->_data->window))
 	{
 		cursor.loadFromSystem(sf::Cursor::Hand);
 		this->_menuButton.setColor(sf::Color::Red);
 		_data->window.setMouseCursor(cursor);
 	}
-	else if (this->_data->input.isMouseCursorOnSprite(this->_saveButton, this->_data->window))
+	else if (this->_data->input.isMouseCursorOnObject(this->_saveButton, this->_data->window))
 	{
 		cursor.loadFromSystem(sf::Cursor::Hand);
 		this->_saveButton.setColor(sf::Color::Yellow);

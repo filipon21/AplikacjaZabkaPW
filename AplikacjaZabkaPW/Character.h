@@ -8,7 +8,7 @@ class Character
 {
 private:
 	/**
-	 * Method for updating character.
+	 * Method for updating _character.
 	 *
 	 */
 	void update();
@@ -60,7 +60,7 @@ public:
 	void render(sf::RenderTarget& target);
 
 	/**
-	 * MEthod for adding textures initalize textures and add them to character.
+	 * MEthod for adding textures initalize textures and add them to _character.
 	 * 
 	 */
 	void makeChar();

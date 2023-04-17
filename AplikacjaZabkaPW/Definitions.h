@@ -19,6 +19,8 @@
 
 #define GAME_TITLE_FILEPATH "Resources/res/title.png"
 #define PLAY_BUTTON_FILEPATH "Resources/res/graj.png"
+#define OVERWRITE_BUTTON_FILEPATH "Resources/res/nadpisz.png"
+#define DELETE_BUTTON_FILEPATH "Resources/res/usun.png"
 #define EXIT_BUTTON_FILEPATH "Resources/res/wyjdz.png"
 #define NEW_SAVE_BUTTON_FILEPATH "Resources/res/nowy_zapis.png"
 #define SAVE_BUTTON_FILEPATH "Resources/res/zapisz_gre.png"

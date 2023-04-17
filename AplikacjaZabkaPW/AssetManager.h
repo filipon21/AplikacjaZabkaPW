@@ -29,7 +29,7 @@ public:
 	sf::Texture& getTexture(std::string name);
 
 	/**
-	 * Method for loading font.
+	 * Method for loading _font.
 	 *
 	 * \param name - assing name to font for later use
 	 * \param fileName - path for file
@@ -37,7 +37,7 @@ public:
 	void loadFont(std::string name, std::string fileName);
 
 	/**
-	 * Method for getting the font.
+	 * Method for getting the _font.
 	 *
 	 * \param name - name for the saved font
 	 * \return reference to saved font

@@ -64,19 +64,19 @@ MainMenuState::MainMenuState(GameDataRef data) : _data(data)
 				this->_data->window.close();
 			}
 
-			if (this->_data->input.isSpriteClicked(this->_playButton, sf::Mouse::Left, this->_data->window))
+			if (this->_data->input.isObjectClicked(this->_playButton, sf::Mouse::Left, this->_data->window))
 			{
 				std::cout << "Go To Game Screen" << std::endl;
 				this->_data->machine.addState(StateRef(new GameState(_data)), true);
 			}
 
-			if (this->_data->input.isSpriteClicked(this->_loadButton, sf::Mouse::Left, this->_data->window))
+			if (this->_data->input.isObjectClicked(this->_loadButton, sf::Mouse::Left, this->_data->window))
 			{
 				std::cout << "Load" << std::endl;
 				this->_data->machine.addState(StateRef(new GameLoadState(_data)), true);
 			}
 
-			if (this->_data->input.isSpriteClicked(this->_exitButton, sf::Mouse::Left, this->_data->window))
+			if (this->_data->input.isObjectClicked(this->_exitButton, sf::Mouse::Left, this->_data->window))
 			{
 				std::cout << "Exit" << std::endl;
 				this->_data->window.close();
@@ -88,25 +88,25 @@ MainMenuState::MainMenuState(GameDataRef data) : _data(data)
 	{
 		sf::Cursor cursor;
 
-		if (this->_data->input.isMouseCursorOnSprite(this->_playButton, this->_data->window))
+		if (this->_data->input.isMouseCursorOnObject(this->_playButton, this->_data->window))
 		{
 			cursor.loadFromSystem(sf::Cursor::Hand);
 			this->_playButton.setColor(sf::Color::Green);
 			_data->window.setMouseCursor(cursor);
 		}
-		else if (this->_data->input.isMouseCursorOnSprite(this->_exitButton, this->_data->window))
+		else if (this->_data->input.isMouseCursorOnObject(this->_exitButton, this->_data->window))
 		{
 			cursor.loadFromSystem(sf::Cursor::Hand);
 			this->_exitButton.setColor(sf::Color::Red);
 			_data->window.setMouseCursor(cursor);
 		}
-		else if (this->_data->input.isMouseCursorOnSprite(this->_charSelectorButton, this->_data->window))
+		else if (this->_data->input.isMouseCursorOnObject(this->_charSelectorButton, this->_data->window))
 		{
 			cursor.loadFromSystem(sf::Cursor::Hand);
 			this->_charSelectorButton.setColor(sf::Color::Cyan);
 			_data->window.setMouseCursor(cursor);
 		}
-		else if (this->_data->input.isMouseCursorOnSprite(this->_loadButton, this->_data->window))
+		else if (this->_data->input.isMouseCursorOnObject(this->_loadButton, this->_data->window))
 		{
 			cursor.loadFromSystem(sf::Cursor::Hand);
 			this->_loadButton.setColor(sf::Color::Magenta);

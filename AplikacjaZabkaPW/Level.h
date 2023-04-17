@@ -38,7 +38,7 @@ class Level
 public:
 	Level(float timeLimit, float spawnTime,GameDataRef data);
 
-	void init(int level, sf::RenderTarget& target, std::string backgroundName, std::string roadName);
+	void init(int level, std::string backgroundName, std::string roadName);
 
 	void render(sf::RenderTarget& target);
 
