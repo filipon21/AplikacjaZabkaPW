@@ -1,12 +1,15 @@
 #pragma once
+#include "Character.h"
+#include "Enemy.h"
 #include "State.h"
 #include "Game.h"
+#include "Level.h"
 
 class GamePauseState :
     public State
 {
 public:
-    GamePauseState(GameDataRef data);
+    GamePauseState(GameDataRef data, Level* level, std::vector<Enemy*> enemies, Character* character, unsigned currentLevel);
 
     // Inherited via State
     void init() override;
@@ -16,9 +19,14 @@ public:
 
 private:
     GameDataRef _data;
+    Level* _level;
+    std::vector<Enemy*> _enemies;
+    unsigned _currentLevel;
+    Character* _character;
 
     sf::Sprite _background;
     sf::Sprite _playButton;
+    sf::Sprite _saveButton;
     sf::Sprite _newGameButton;
     sf::Sprite _menuButton;
 

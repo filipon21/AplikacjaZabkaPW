@@ -1,40 +1,40 @@
 #include "Enemy.h"
+#include <sstream>
+#include <utility>
 
-void Enemy::initVariables()
-{
-	 this->pointCount = rand() % 8 + 3; //min = 3, max = 10
-	 this->type = 0;
-	 this->speed = static_cast<float>(this->pointCount/3);
-	 this->hpMax = static_cast<float>(this->pointCount);
-	 this->hp = this->hpMax;
-	 this->damage = this->pointCount;
-	 this->points = this->pointCount;
-}
+#include "EnemyTypeEnum.h"
 
-void Enemy::initShape()
+void Enemy::initEnemy(const sf::Texture& texture)
 {
-	this->shape.setRadius(this->pointCount * 5);
-	this->shape.setPointCount(this->pointCount);
-	this->shape.setFillColor(sf::Color(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1, 255));
+	this->shape.setTexture(texture);
+	this->shape.setScale(0.5f, 0.5f);
 }
 
 Enemy::Enemy()
-{
-}
+= default;
 
-Enemy::Enemy(float posX, float posY)
+//Enemy::Enemy(float posX, float posY)
+//{
+//	this->initVariables();
+//	this->initEnemy();
+//
+//	this->shape.setPosition(posX, posY);
+//}
+
+Enemy::Enemy(const int hp, const int hpMax, const float speed, const int damage, const int points, const int pointCount,
+             const sf::Texture& texture, const int textureName, const float posX, const float posY) :
+    speed(speed), hp(hp), hpMax(hpMax), damage(damage), points(points), pointCount(pointCount), _textureName(
+	    std::move(textureName))
 {
-	this->initVariables();
-	this->initShape();
+	initEnemy(texture);
 
 	this->shape.setPosition(posX, posY);
 }
 
 Enemy::~Enemy()
-{
-}
+= default;
 
-const sf::FloatRect Enemy::getBounds() const
+sf::FloatRect Enemy::getBounds() const
 {
 	return this->shape.getGlobalBounds();
 }
@@ -42,6 +42,50 @@ const sf::FloatRect Enemy::getBounds() const
 const int& Enemy::getDamage() const
 {
 	return this->damage;
+}
+
+const EnemyTypeEnum& Enemy::getType() const
+{
+	return type;
+}
+
+const float& Enemy::getSpeed() const
+{
+	return speed;
+}
+
+const int& Enemy::getHp() const
+{
+	return hp;
+}
+
+const int& Enemy::getHpMax() const
+{
+	return hpMax;
+}
+
+const int& Enemy::getPoints() const
+{
+	return points;
+}
+
+const int& Enemy::getPointCount() const
+{
+	return pointCount;
+}
+
+float Enemy::getPositionX() const
+{
+	return this->shape.getPosition().x;
+}
+
+float Enemy::getPositionY() const
+{
+	return this->shape.getPosition().y;
+}
+int Enemy::getTextureName() const
+{
+	return _textureName;
 }
 
 void Enemy::update()
@@ -53,3 +97,12 @@ void Enemy::render(sf::RenderTarget& target)
 {
 	target.draw(this->shape);
 }
+
+std::ostream& operator<<(std::ostream& os, const Enemy& enemy)
+{
+	os << enemy.getHpMax() << ';' << enemy.getHp() << ';' << enemy.getDamage() << ';' << enemy.getPointCount()
+		<< ';' << enemy.getPoints() << ';' << enemy.getSpeed() << ';' << enemy.getPositionX()
+		<< ';' << enemy.getPositionY() << ';' << enemy.getTextureName();
+	return os;
+}
+ 

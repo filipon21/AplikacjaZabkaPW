@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "StateMachine.h"
 #include "AssetManager.h"
+#include "FileManager.h"
 #include "InputManager.h"
 
 
@@ -14,6 +15,7 @@ struct GameData
 	sf::RenderWindow window;
 	AssetManager assets;
 	InputManager input;
+	FileManager fileManager;
 };
 
 // reference to all game data

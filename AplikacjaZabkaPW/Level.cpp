@@ -1,47 +1,84 @@
 #include "Level.h"
 
-Level::Level(float timeLimit, float spawnTime,GameDataRef data) : timeLimit(timeLimit), spawnTime(spawnTime), _data(data)
+#include <iostream>
+#include <utility>
+
+Level::Level(float timeLimit, float spawnTime, unsigned currentLevel) :
+_timeLimit(timeLimit), _spawnTime(spawnTime), _currentLevel(currentLevel)
 {
 }
 
-void Level::init(int level, sf::RenderTarget& target, std::string backgroundName, std::string roadName)
+
+Level::~Level()
 {
-
-	this->worldBackground.setTexture(this->_data->assets.getTexture(std::move(backgroundName)));
-
-
-	this->road.setTexture(this->_data->assets.getTexture(std::move(roadName)));
-	this->road.setPosition(0.f, (this->_data->window.getSize().y - this->road.getGlobalBounds().height) / 2);
 }
 
-void Level::render(sf::RenderTarget& target)
+void Level::init(std::string backgroundName, std::string roadName)
 {
-	target.draw(this->worldBackground);
-	target.draw(this->road);
+	if (!_worldTexture.loadFromFile(backgroundName))
+	{
+		std::cout << "ERROR::BACKGROUND_WORLD::INITTEXTURE::Could not load texture file." << "\n";
+	}else
+	{
+		this->_worldBackground.setTexture(_worldTexture);
+	}
+
+	if (!_roadTexture.loadFromFile(roadName))
+	{
+		std::cout << "ERROR::BACKGROUND_WORLD::INITTEXTURE::Could not load texture file." << "\n";
+	} else
+	{
+		this->_road.setTexture(_roadTexture);
+	}
+
+	this->_road.setPosition(0.f, (SCREEN_HEIGHT - this->_road.getGlobalBounds().height) / 2);
+}
+
+void Level::render(sf::RenderTarget& target) const
+{
+	target.draw(this->_worldBackground);
+	target.draw(this->_road);
 }
 
 void Level::setTimeRemaining(float time)
 {
-	this->timeRemaining = time;
+	this->_timeRemaining = time;
 }
 
-float Level::getTimeLimit()
+void Level::setRoadTexture(sf::Texture& texture)
 {
-	return this->timeLimit;
+	this->_road.setTexture(texture);
+	this->_road.setPosition(0.f, (SCREEN_HEIGHT - this->_road.getGlobalBounds().height) / 2);
+}
+
+void Level::setWorldTexture(sf::Texture& texture)
+{
+	this->_worldBackground.setTexture(texture);
+}
+
+float Level::getTimeLimit() const
+{
+	return this->_timeLimit;
 }
 
 
 sf::Sprite Level::getRoad()
 {
-	return this->road;
+	return this->_road;
 }
 
-
-float Level::getSpawnTime()
+float Level::getSpawnTime() const
 {
-	return this->spawnTime;
+	return this->_spawnTime;
 }
-std::string Level::getBackgroundFilePath(int level)
+
+float Level::getCurrentLevel() const
 {
-	return this->levelsData[level].backgroundFilePath;
+	return this->_currentLevel;
+}
+
+std::ostream& operator<<(std::ostream& os, const Level& level)
+{
+	os << level.getSpawnTime() << ';' << level.getTimeLimit() << ';' << level.getCurrentLevel();
+	return os;
 }

@@ -24,6 +24,11 @@ const int& Character::getHp() const
     return this->hp;
 }
 
+const float& Character::getMovSpeed() const
+{
+    return this->movementSpeed;
+}
+
 const int& Character::getHpMax() const
 {
     return this->hpMax;
@@ -70,4 +75,11 @@ void Character::makeChar()
 {
     this->initTexture();
     this->initSprite();
+}
+
+std::ostream& operator<<(std::ostream& os, const Character& character)
+{
+    os << character.getPos().x << ';' << character.getPos().y << ';' << character.getHp() << ';' << character.getHpMax() << ';'
+        << character.getMovSpeed();
+    return os;
 }

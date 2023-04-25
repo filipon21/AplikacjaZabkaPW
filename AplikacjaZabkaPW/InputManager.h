@@ -13,23 +13,35 @@
 		~InputManager() {}
 
 		/**
-		 * Method which checks if Sprite is clicked.
+		 *  Method template which checks if object is clicked.
 		 * 
-		 * \param object:Sprite - object which we want to check if is clicked
+		 * \param object:T - object which we want to check if is clicked
 		 * \param button:Button - button of mouse which we want to check if is clicked
 		 * \param window:RenderWindow& - window in which we want to check the action
 		 * \return true or false:boolean
 		 */
-		bool isSpriteClicked(sf::Sprite object, sf::Mouse::Button button, sf::RenderWindow& window);
+		template<typename T>
+		bool isObjectClicked(T object, sf::Mouse::Button button, sf::RenderWindow& window)
+		{
+			sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+			sf::Vector2f mousePosFloat = window.mapPixelToCoords(mousePos);
+			return sf::Mouse::isButtonPressed(button) &&
+				object.getGlobalBounds().contains(mousePosFloat);
+		};
 
 		/**
-		 * Method which checks if mouse coursor is on the Sprite.
+		 * Method template which checks if mouse coursor is on the object of Type T.
 		 * 
-		 * \param object:Sprite - object on which we want to check if the cursor is
+		 * \param object:T - object on which we want to check if the cursor is
 		 * \param window:RenderWindow& - window in which we want to check the action
 		 * \return true or false:boolean
 		 */
-		bool isMouseCursorOnSprite(sf::Sprite object, sf::RenderWindow& window);
+		template<typename T>
+		bool isMouseCursorOnObject(T object, sf::RenderWindow& window) {
+			sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+			sf::Vector2f mousePosFloat = window.mapPixelToCoords(mousePos);
+			return object.getGlobalBounds().contains(mousePosFloat);
+		};
 
 		/**
 		 * Method which checks current cursor position.

@@ -8,7 +8,7 @@ class Character
 {
 private:
 	/**
-	 * Method for updating character.
+	 * Method for updating _character.
 	 *
 	 */
 	void update();
@@ -41,6 +41,7 @@ public:
 	const sf::Vector2f& getPos() const;
 	const sf::FloatRect getBounds() const;
 	const int& getHp() const;
+	const float& getMovSpeed() const;
 	const int& getHpMax() const;
 
 	//Modifiers
@@ -60,9 +61,10 @@ public:
 	void render(sf::RenderTarget& target);
 
 	/**
-	 * MEthod for adding textures initalize textures and add them to character.
+	 * MEthod for adding textures initalize textures and add them to _character.
 	 * 
 	 */
 	void makeChar();
 };
 
+std::ostream& operator<<(std::ostream& os, const Character& character);

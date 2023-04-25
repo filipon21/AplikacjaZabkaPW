@@ -77,6 +77,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\external\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,13 +137,14 @@
     <ClCompile Include="AplikacjaZabkaPW.cpp" />
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Character.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="CurrentGameData.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyTypeEnum.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="Frog.cpp" />
+    <ClCompile Include="GameLoadState.cpp" />
     <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="GamePauseState.cpp" />
+    <ClCompile Include="GameSaveState.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -153,19 +155,19 @@
     <ClCompile Include="RegisterState.cpp" />
     <ClCompile Include="SplashState.cpp" />
     <ClCompile Include="StateMachine.cpp" />
-    <ClCompile Include="Vehicle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Character.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="CurrentGameData.h" />
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyTypeEnum.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="Frog.h" />
+    <ClInclude Include="GameLoadState.h" />
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="GamePauseState.h" />
+    <ClInclude Include="GameSaveState.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputManager.h" />
@@ -177,7 +179,6 @@
     <ClInclude Include="SplashState.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
-    <ClInclude Include="Vehicle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
