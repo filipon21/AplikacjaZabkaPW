@@ -24,12 +24,17 @@ public:
 	Level() = delete;
 	~Level();
 
+	/**
+	 * Method for init textures for level.
+	 */
 	void init(std::string backgroundName, std::string roadName);
 
+	/**
+	 * Method for rendering current level textures in specific window (target).
+	 */
 	void render(sf::RenderTarget& target) const;
 
 	void setTimeRemaining(float time);
-
 	void setRoadTexture(sf::Texture& texture);
 	void setWorldTexture(sf::Texture& texture);
 

@@ -16,9 +16,15 @@ class GameLoadState :
 public:
 	GameLoadState(GameDataRef data);
 	void init() override;
-	void loadFiles();
 	void handleInput() override;
 	void update(float dt) override;
 	void draw(float dt) override;
+
+	/**
+	 * Method for loading files and setting textures for them.
+	 * 
+	 */
+	void loadFiles();
+
 };
 

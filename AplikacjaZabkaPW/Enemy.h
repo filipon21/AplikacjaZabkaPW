@@ -22,7 +22,6 @@ class Enemy
 
 public:
 	Enemy();
-	//Enemy(float posX, float posY);
 	Enemy(const int hp, const int hpMax, const float speed, const int damage, const int points, const int pointCount, 
 		const sf::Texture& texture, const int textureName, const float posX, const float posY);
 	virtual ~Enemy();
@@ -40,7 +39,17 @@ public:
 	float getPositionY() const;
 	int getTextureName() const;
 
+	/**
+	 * Method for update position of enemy.
+	 * 
+	 */
 	void update();
+
+	/**
+	 * Method for rendering enemy in window.
+	 * 
+	 * \param target - specific game window
+	 */
 	void render(sf::RenderTarget& target);
 };
 

@@ -13,6 +13,12 @@ public:
     ~Frog();
 
     //Functions
+    /**
+     * Method for moving character.
+     *
+     * \param dirX - moves character in x directory
+     * \param dirY -  moves character in y directory
+     */
     void move(const float dirX, const float dirY) override;
 
 };

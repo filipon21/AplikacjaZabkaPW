@@ -57,12 +57,6 @@
     <ClCompile Include="GameState.cpp">
       <Filter>Pliki źródłowe\States</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenuState.cpp">
-      <Filter>Pliki źródłowe\States</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuCharacterSelectorState.cpp">
-      <Filter>Pliki źródłowe\States</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Pliki źródłowe\Game</Filter>
     </ClCompile>
@@ -81,12 +75,6 @@
     <ClCompile Include="AplikacjaZabkaPW.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="LoginState.cpp">
-      <Filter>Pliki źródłowe\States</Filter>
-    </ClCompile>
-    <ClCompile Include="RegisterState.cpp">
-      <Filter>Pliki źródłowe\States</Filter>
-    </ClCompile>
     <ClCompile Include="GameLoadState.cpp">
       <Filter>Pliki źródłowe\States</Filter>
     </ClCompile>
@@ -95,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="EnemyTypeEnum.cpp">
       <Filter>Pliki źródłowe\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>Pliki źródłowe\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,9 +125,6 @@
     <ClInclude Include="MainMenuState.h">
       <Filter>Pliki nagłówkowe\States</Filter>
     </ClInclude>
-    <ClInclude Include="MenuCharacterSelectorState.h">
-      <Filter>Pliki nagłówkowe\States</Filter>
-    </ClInclude>
     <ClInclude Include="Definitions.h">
       <Filter>Pliki nagłówkowe\Engine</Filter>
     </ClInclude>
@@ -149,12 +137,6 @@
     <ClInclude Include="Level.h">
       <Filter>Pliki nagłówkowe\Game</Filter>
     </ClInclude>
-    <ClInclude Include="LoginState.h">
-      <Filter>Pliki nagłówkowe\States</Filter>
-    </ClInclude>
-    <ClInclude Include="RegisterState.h">
-      <Filter>Pliki nagłówkowe\States</Filter>
-    </ClInclude>
     <ClInclude Include="GameLoadState.h">
       <Filter>Pliki nagłówkowe\States</Filter>
     </ClInclude>
@@ -166,6 +148,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

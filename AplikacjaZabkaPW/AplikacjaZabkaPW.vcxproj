@@ -149,10 +149,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Level.cpp" />
-    <ClCompile Include="LoginState.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
-    <ClCompile Include="MenuCharacterSelectorState.cpp" />
-    <ClCompile Include="RegisterState.cpp" />
     <ClCompile Include="SplashState.cpp" />
     <ClCompile Include="StateMachine.cpp" />
   </ItemGroup>
@@ -172,16 +169,13 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="LoginState.h" />
     <ClInclude Include="MainMenuState.h" />
-    <ClInclude Include="MenuCharacterSelectorState.h" />
-    <ClInclude Include="RegisterState.h" />
     <ClInclude Include="SplashState.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
