@@ -7,12 +7,6 @@
 #include "Game.h"
 #include "Level.h"
 
-struct GameStateData
-{
-	Character* character;
-	Level level;
-};
-
 /*
 * Class that acts as the game engine.
 * Wrapper class.
