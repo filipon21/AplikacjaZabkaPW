@@ -8,13 +8,13 @@ class GameOverState :
     public State
 {
 public:
-    GameOverState(GameDataRef data);
+    GameOverState(GameDataRef data, bool ifLost);
 
     // Inherited via State
-    virtual void init() override;
-    virtual void handleInput() override;
-    virtual void update(float dt) override;
-    virtual void draw(float dt) override;
+     void init() override;
+     void handleInput() override;
+     void update(float dt) override;
+     void draw(float dt) override;
 
 private:
     GameDataRef _data;
@@ -22,5 +22,8 @@ private:
     sf::Text _gameOverText;
     sf::Sprite _background;
 
+    sf::Sprite _returnButton;
+    sf::Sprite _newGameButton;
+    bool _ifLost;
 };
 

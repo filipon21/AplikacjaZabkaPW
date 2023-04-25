@@ -17,6 +17,11 @@
 #define GAME_OVER_BACKGROUND_FILEPATH "Resources/res/grass2.jpg"
 #define GAME_GRASS_BACKGROUND_FILEPATH "Resources/res/grass.jpg"
 
+#define ENEMY_B "Resources/res/b.png"
+#define ENEMY_S "Resources/res/s.png"
+#define ENEMY_XL "Resources/res/xl.png"
+#define ENEMY_XS "Resources/res/xs.png"
+
 #define GAME_TITLE_FILEPATH "Resources/res/title.png"
 #define PLAY_BUTTON_FILEPATH "Resources/res/graj.png"
 #define OVERWRITE_BUTTON_FILEPATH "Resources/res/nadpisz.png"

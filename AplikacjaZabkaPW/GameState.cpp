@@ -6,19 +6,39 @@
 #include "GameOverState.h"
 #include "Level.h"
 #include <iostream>
+#include <utility>
 
 #include "GamePauseState.h"
 
 
-GameState::GameState(GameDataRef data) : _data(data)
+GameState::GameState(GameDataRef data) : _data(std::move(data))
 {
-
 }
+
+GameState::GameState(GameDataRef data, unsigned level, std::vector<Enemy*> enemies, bool ifLoaded) :
+_data(std::move(data)), _currentLevel(level), _ifLoaded(ifLoaded), _enemies(enemies)
+{
+	std::cout << level << std::endl;
+	this->_data->assets.loadTexture("Game background", GAME_BACKGROUND_FILEPATH);
+	this->_data->assets.loadTexture("Game background 2", GAME_OVER_BACKGROUND_FILEPATH);
+	this->_data->assets.loadTexture("Game background 3", GAME_GRASS_BACKGROUND_FILEPATH);
+	this->_data->assets.loadTexture("Game background 4", GAME_DIRT_BACKGROUND_FILEPATH);
+	this->_data->assets.loadTexture("Game background 5", GAME_DIRT2_BACKGROUND_FILEPATH);
+	this->_data->assets.loadTexture("road", ROAD_FILEPATH);
+
+	//Tui chyba brakuje filepathow
+	this->_levels.push_back(new Level(27.f, 0.5f, 1));
+	this->_levels.push_back(new Level(21.f, 1.5f, 2));
+	this->_levels.push_back(new Level(16.f, 2.5f, 3));
+	this->_levels.push_back(new Level(11.f, 3.f, 4));
+	this->_levels.push_back(new Level(11.f, 3.5f, 5));
+}
+
 
 GameState::~GameState() {
 	delete this->_character;
 
-	//delete _enemies for avoid memmory leak
+	//delete _enemies for avoid memory leak
 	for (auto& i : this->_enemies)
 	{
 		delete i;
@@ -27,12 +47,28 @@ GameState::~GameState() {
 
 void GameState::init()
 {
-	this->initCharacter();
-	this->initEnemies();
-	this->initBackground();
-	this->initGUI();
-	this->initSystems();
-	_ifTimeUpdate = true;
+
+	if (_ifLoaded)
+	{
+		this->_levels[_currentLevel-1]->setWorldTexture(this->_data->assets.getTexture(levelsData[_currentLevel-1]));
+		this->_levels[_currentLevel-1]->setRoadTexture(this->_data->assets.getTexture("road"));
+		this->initCharacter();
+		this->initEnemies();
+		this->initGUI();
+		this->_timeRemaining = this->_levels[this->_currentLevel - 1]->getTimeLimit();
+		//changeLevel();
+		_ifTimeUpdate = true;
+		std::cout << _enemies.size();
+	}
+	else
+	{
+		this->initBackground();
+		this->initCharacter();
+		this->initEnemies();
+		this->initGUI();
+		this->initSystems();
+		_ifTimeUpdate = true;
+	}
 }
 
 void GameState::handleInput()
@@ -55,7 +91,8 @@ void GameState::handleInput()
 			{
 				_ifTimeUpdate = false;
 				this->_pauseTime = this->_clock.getElapsedTime();
-				this->_data->machine.addState(StateRef(new GamePauseState(_data, _level, _enemies, _character, _currentLevel)), false);
+				this->_data->machine.addState(StateRef(new GamePauseState(_data, _levels[_currentLevel - 1], 
+					_enemies, _character, _currentLevel)), false);
 			}
 			break;
 		default:
@@ -102,7 +139,7 @@ void GameState::draw(float dt)
 	if (this->_character->getHp() <= 0 || this->_timeRemaining <= 0)
 	{
 		std::cout << "Go To Game Over screen" << std::endl;
-		this->_data->machine.addState(StateRef(new GameOverState(_data)), false);
+		this->_data->machine.addState(StateRef(new GameOverState(_data, true)), false);
 	}
 
 	//Display all objects
@@ -145,23 +182,15 @@ void GameState::initGUI()
 
 void GameState::initBackground()
 {
-	this->_data->assets.loadTexture("Game background", GAME_BACKGROUND_FILEPATH);
-	this->_data->assets.loadTexture("Game background 2", GAME_OVER_BACKGROUND_FILEPATH);
-	this->_data->assets.loadTexture("Game background 3", GAME_GRASS_BACKGROUND_FILEPATH);
-	this->_data->assets.loadTexture("Game background 4", GAME_DIRT_BACKGROUND_FILEPATH);
-	this->_data->assets.loadTexture("Game background 5", GAME_DIRT2_BACKGROUND_FILEPATH);
-	this->_data->assets.loadTexture("road", ROAD_FILEPATH);
+	//Tui chyba brakuje filepathow
+	this->_levels.push_back(new Level(27.f, 0.2f, 1));
+	this->_levels.push_back(new Level(20.f, 0.4f, 2));
+	this->_levels.push_back(new Level(15.f, 0.5f, 3));
+	this->_levels.push_back(new Level(10.f, 0.7f, 4));
+	this->_levels.push_back(new Level(10.f, 1.f, 5));
 
-	this->_levels.push_back(new Level(25.f, 2.5f, _data));
-	this->_levels.push_back(new Level(20.f, 2.5f, _data));
-	this->_levels.push_back(new Level(15.f, 3.f, _data));
-	this->_levels.push_back(new Level(10.f, 3.f, _data));
-	this->_levels.push_back(new Level(10.f, 3.5f, _data));
-
-	std::cout <<_levels.size() << std::endl;
-	//this->_levels.push_back(*new Level(50.f, _data));
-	this->_level = new Level(31.f, 0.5f, _data);
-	this->_level->init(1,this->_level->getBackgroundFilePath(0), "road");
+	this->_levels[0]->setRoadTexture(this->_data->assets.getTexture("road"));
+	this->_levels[0]->setWorldTexture(this->_data->assets.getTexture(levelsData[0]));
 }
 
 void GameState::initSystems()
@@ -169,7 +198,7 @@ void GameState::initSystems()
 
 	this->_currentLevel = 1;
 
-	this->_timeRemaining = this->_level->getTimeLimit();
+	this->_timeRemaining = this->_levels[this->_currentLevel-1]->getTimeLimit();
 
 }
 
@@ -211,10 +240,15 @@ void GameState::updateInput()
 void GameState::updateEnemies()
 {
 	//Spawning
-	this->_spawnTimer += this->_level->getSpawnTime(); // zmiana dla leveli
+	this->_spawnTimer += this->_levels[_currentLevel-1]->getSpawnTime(); // zmiana dla leveli
 	if (this->_spawnTimer >= this->_spawnTimerMax)
 	{
-		this->_enemies.push_back(new Enemy(0, rand() % static_cast<int>(this->_level->getRoad().getGlobalBounds().height - this->_level->getRoad().getGlobalBounds().top)));
+		int random_num = std::rand() % 3;
+		this->_enemies.push_back(new Enemy(_enemyData[random_num].hp, _enemyData[random_num].hpMax, _enemyData[random_num].speed, 
+			_enemyData[random_num].damage, _enemyData[random_num].points, _enemyData[random_num].pointCount,
+			this->_data->assets.getTexture(std::to_string(_enemyData[random_num].texture)), (_enemyData[random_num].texture), 
+			0,rand() % static_cast<int>(this->_levels[_currentLevel - 1]->getRoad().getGlobalBounds().height 
+				- this->_levels[_currentLevel - 1]->getRoad().getGlobalBounds().top)));
 		this->_spawnTimer = 0.f;
 	}
 
@@ -224,15 +258,14 @@ void GameState::updateEnemies()
 	{
 		enemy->update();
 
-		//delete enemie if it reaches right border of window or after collision with player
-		if (enemy->getBounds().left + enemy->getBounds().width > this->_data->window.getSize().x)
+		//delete enemy if it reaches right border of window or after collision with player
+		if (enemy->getBounds().left > this->_data->window.getSize().x)
 		{
 			//delete enemy
 			delete this->_enemies.at(counter);
 			this->_enemies.erase(this->_enemies.begin() + counter);
 			std::cout << this->_enemies.size() << "\n";
 			--counter;
-
 		}
 
 		//Enemy player collision
@@ -248,19 +281,6 @@ void GameState::updateEnemies()
 		}
 		++counter;
 	}
-
-	//for (int i = 0; i < this->_enemies.size(); ++i)
-	//{
-
-	//	this->_enemies[i]->update();
-
-	//	//remove enemy at the bottom of the screen
-	//	if (this->_enemies[i]->getBounds().left + this->_enemies[i]->getBounds().width > this->window.getSize().x)
-	//	{
-	//		this->_enemies.erase(this->_enemies.begin() + i);
-	//		std::cout << this->_enemies.size() << "\n";
-	//	}
-	//}
 }
 
 void GameState::updateCollision()
@@ -285,21 +305,12 @@ void GameState::updateCollision()
 		this->_character->setPosition(this->_data->window.getSize().x / 2, this->_data->window.getSize().y);
 		this->_currentLevel += 1;
 
-		if (_currentLevel - 1 >= _levels.size()) {
-			std::cout << "Indeks " << _currentLevel << " jest poza zakresem wektora.\n";
-		}
-
-		// Zmiany dla nowego levela
-		else {
 			this->changeLevel();
 
 			if (this->_character->getHp() != this->_character->getHpMax())
 			{
 				this->_character->setHp(std::min(this->_character->getHp() + 10, this->_character->getHpMax()));
 			}
-
-			std::cout << this->_level->getBackgroundFilePath(_currentLevel - 1) <<std::endl;
-		}
 	}
 
 	//bottom world collision
@@ -312,18 +323,19 @@ void GameState::updateCollision()
 void GameState::changeLevel()
 {
 	if (_currentLevel - 1 >= 0 && _currentLevel - 1 < _levels.size()) {
-		this->_level = _levels[_currentLevel - 1];
+		this->_levels[_currentLevel - 1] = _levels[_currentLevel - 1];
 		std::cout << "time w _level ";
-		std::cout << _levels[_currentLevel - 1]->getTimeLimit();
-		this->_level->init(1,this->_level->getBackgroundFilePath(_currentLevel - 1), "road");
+		std::cout << _levels[_currentLevel - 1]->getTimeLimit() << std::endl;
+		this->_levels[_currentLevel-1]->setWorldTexture(this->_data->assets.getTexture(levelsData[_currentLevel-1]));
+		this->_levels[_currentLevel-1]->setRoadTexture(this->_data->assets.getTexture("road"));
+		// Reset zegara dla danego levela
+		this->_timeRemaining = this->_levels[_currentLevel - 1]->getTimeLimit();
 	}
-	else {
-		this->_level = _levels[0];
-		this->_level->init(1,this->_level->getBackgroundFilePath(0), "road");
+	else
+	{
+		std::cout << "You win" << std::endl;
+		this->_data->machine.addState(StateRef(new GameOverState(_data, false)), false);
 	}
-
-	// Reset zegara dla danego levela
-	this->_timeRemaining = this->_level->getTimeLimit();
 }
 
 void GameState::updateGUI()
@@ -352,10 +364,12 @@ void GameState::updateTime()
 {
 	float dt = this->_clock.restart().asSeconds();
 	this->_timeRemaining -= dt;
-	std::cout << _timeRemaining << std::endl;
 }
 
 void GameState::renderBackground()
 {
-	this->_level->render(this->_data->window);
+	if (_currentLevel - 1 < _levels.size()) {
+		this->_levels[_currentLevel - 1]->render(this->_data->window);
+	}
+	
 }

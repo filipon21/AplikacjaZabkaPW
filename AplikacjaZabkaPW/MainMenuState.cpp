@@ -19,18 +19,36 @@ MainMenuState::MainMenuState(GameDataRef data) : _data(data)
 
 	void MainMenuState::init()
 	{
+		this->_data->assets.loadTexture("Delete Button", DELETE_BUTTON_FILEPATH);
+		this->_data->assets.loadTexture("Overwrite Button", OVERWRITE_BUTTON_FILEPATH);
 		this->_data->assets.loadTexture("Main Menu Background", MAIN_MENU_BACKGROUND_FILEPATH);
 		//this->_data->assets.loadTexture("Game Title", GAME_TITLE_FILEPATH);
 		this->_data->assets.loadTexture("Play Button", PLAY_BUTTON_FILEPATH);
 		this->_data->assets.loadTexture("Exit Button", EXIT_BUTTON_FILEPATH);
 		this->_data->assets.loadTexture("Load Button", LOAD_GAME_BUTTON_FILEPATH);
+		this->_data->assets.loadTexture("Return To Menu", RETURN_TO_MENU_BUTTON_FILEPATH);
 		this->_data->assets.loadTexture("Select Char Button", SELECT_CHAR_BUTTON_FILEPATH);
+		this->_data->assets.loadTexture("Game over Background", GAME_OVER_BACKGROUND_FILEPATH);
+
+		this->_data->assets.loadTexture("Game background", GAME_BACKGROUND_FILEPATH);
+		this->_data->assets.loadTexture("Game background 2", GAME_OVER_BACKGROUND_FILEPATH);
+		this->_data->assets.loadTexture("Game background 3", GAME_GRASS_BACKGROUND_FILEPATH);
+		this->_data->assets.loadTexture("Game background 4", GAME_DIRT_BACKGROUND_FILEPATH);
+		this->_data->assets.loadTexture("Game background 5", GAME_DIRT2_BACKGROUND_FILEPATH);
+
+		this->_data->assets.loadTexture("1", ENEMY_S);
+		this->_data->assets.loadTexture("2", ENEMY_XS);
+		this->_data->assets.loadTexture("3", ENEMY_B);
+		this->_data->assets.loadTexture("4", ENEMY_XL);
+
+		this->_data->assets.loadTexture("road", ROAD_FILEPATH);
+
 		this->_data->assets.loadFont("Pixel font", PIXEL_FONT);
 
 		_background.setTexture(this->_data->assets.getTexture("Main Menu Background"));
 		_title.setFont(this->_data->assets.getFont("Pixel font"));
 		_playButton.setTexture(this->_data->assets.getTexture("Play Button"));
-		_charSelectorButton.setTexture(this->_data->assets.getTexture("Select Char Button"));
+		//_charSelectorButton.setTexture(this->_data->assets.getTexture("Select Char Button"));
 		_loadButton.setTexture(this->_data->assets.getTexture("Load Button"));
 		_exitButton.setTexture(this->_data->assets.getTexture("Exit Button"));
 
@@ -43,13 +61,13 @@ MainMenuState::MainMenuState(GameDataRef data) : _data(data)
 
 		_title.setPosition((SCREEN_WIDTH / 2) - (_title.getGlobalBounds().width / 2), _title.getGlobalBounds().height / 2);
 		_playButton.setPosition((SCREEN_WIDTH / 2) - (_playButton.getGlobalBounds().width / 2), (SCREEN_HEIGHT / 2) - (_playButton.getGlobalBounds().height / 2));
-		_charSelectorButton.setPosition((SCREEN_WIDTH / 2) - (_playButton.getGlobalBounds().width / 2),
-			(SCREEN_HEIGHT / 2) - (_playButton.getGlobalBounds().height / 2) + _playButton.getGlobalBounds().height + 50.f);
+		/*_charSelectorButton.setPosition((SCREEN_WIDTH / 2) - (_playButton.getGlobalBounds().width / 2),
+			(SCREEN_HEIGHT / 2) - (_playButton.getGlobalBounds().height / 2) + _playButton.getGlobalBounds().height + 50.f);*/
 		_loadButton.setPosition((SCREEN_WIDTH / 2) - (_playButton.getGlobalBounds().width / 2), 
-			(SCREEN_HEIGHT / 2) - (_playButton.getGlobalBounds().height / 2) + _playButton.getGlobalBounds().height+ _charSelectorButton.getGlobalBounds().height + 100.f);
+			(SCREEN_HEIGHT / 2) - (_playButton.getGlobalBounds().height / 2) + _playButton.getGlobalBounds().height+ _charSelectorButton.getGlobalBounds().height + 50.f);
 		_exitButton.setPosition((SCREEN_WIDTH / 2) - (_playButton.getGlobalBounds().width / 2),
 			(SCREEN_HEIGHT / 2) - (_playButton.getGlobalBounds().height / 2) + _playButton.getGlobalBounds().height + _charSelectorButton.getGlobalBounds().height+
-			_loadButton.getGlobalBounds().height + 150.f);
+			_loadButton.getGlobalBounds().height + 100.f);
 		
 	}
 
@@ -73,7 +91,7 @@ MainMenuState::MainMenuState(GameDataRef data) : _data(data)
 			if (this->_data->input.isObjectClicked(this->_loadButton, sf::Mouse::Left, this->_data->window))
 			{
 				std::cout << "Load" << std::endl;
-				this->_data->machine.addState(StateRef(new GameLoadState(_data)), true);
+				this->_data->machine.addState(StateRef(new GameLoadState(_data)), false);
 			}
 
 			if (this->_data->input.isObjectClicked(this->_exitButton, sf::Mouse::Left, this->_data->window))
@@ -129,7 +147,7 @@ MainMenuState::MainMenuState(GameDataRef data) : _data(data)
 		this->_data->window.draw(this->_background);
 		this->_data->window.draw(this->_title);
 		this->_data->window.draw(this->_playButton);
-		this->_data->window.draw(this->_charSelectorButton);
+		//this->_data->window.draw(this->_charSelectorButton);
 		this->_data->window.draw(this->_loadButton);
 		this->_data->window.draw(this->_exitButton);
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Character.h"
 #include "Enemy.h"
+#include "Game.h"
 #include "Level.h"
 #include "State.h"
 class GameSaveState :
@@ -8,7 +9,7 @@ class GameSaveState :
 {
 	GameDataRef _data;
 
-	Level _level;
+	Level* _level;
 
 	unsigned _currentLevel;
 
@@ -24,16 +25,20 @@ class GameSaveState :
 
 	sf::Sprite _saveButton;
 
-	sf::RenderTexture renderTexture;
+	std::vector<sf::Text> _savesList;
 
-	std::vector<sf::Text> savesList;
+	sf::Text* _currentSaveClicked = nullptr;
 
-	const int maxSpritesPerRow = 3;
+	const int _maxSpritesPerRow = 3;
 
-	const float textSpacing = 100.f;
+	const float _textSpacing = 100.f;
+
+	void loadFiles();
+
+	void saveFile();
 
 public:
-	GameSaveState(GameDataRef data, Level level, std::vector<Enemy*> enemies, Character* character, unsigned currentLevel);
+	GameSaveState(GameDataRef data, Level* level, std::vector<Enemy*> enemies, Character* character, unsigned currentLevel);
 	void init() override;
 	void handleInput() override;
 	void update(float dt) override;

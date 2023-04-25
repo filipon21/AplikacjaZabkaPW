@@ -41,6 +41,7 @@ public:
 	const sf::Vector2f& getPos() const;
 	const sf::FloatRect getBounds() const;
 	const int& getHp() const;
+	const float& getMovSpeed() const;
 	const int& getHpMax() const;
 
 	//Modifiers
@@ -66,3 +67,4 @@ public:
 	void makeChar();
 };
 
+std::ostream& operator<<(std::ostream& os, const Character& character);

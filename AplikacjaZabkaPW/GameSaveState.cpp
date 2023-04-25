@@ -1,18 +1,16 @@
 #include "GameSaveState.h"
 
-#include <iomanip>
-#include <sstream>
+#include <fstream>
+#include <filesystem>
+#include <utility>
 
-GameSaveState::GameSaveState(GameDataRef data, Level level, std::vector<Enemy*> enemies, Character* character, unsigned currentLevel): _data(data), _level(level),
-                                                                                                                                       _enemies(enemies), _character(character), _currentLevel(currentLevel)
+GameSaveState::GameSaveState(GameDataRef data, Level* level, std::vector<Enemy*> enemies, Character* character, unsigned currentLevel):
+_data(std::move(data)), _level(level), _currentLevel(currentLevel), _character(character), _enemies(std::move(enemies))
 {
 }
 
 void GameSaveState::init()
 {
-	this->_data->assets.loadTexture("Delete Button", DELETE_BUTTON_FILEPATH);
-	this->_data->assets.loadTexture("Overwrite Button", OVERWRITE_BUTTON_FILEPATH);
-
 	this->_saveButton.setTexture(this->_data->assets.getTexture("Save Button"));
 	this->_overwriteButton.setTexture(this->_data->assets.getTexture("Overwrite Button"));
 	this->_deleteButton.setTexture(this->_data->assets.getTexture("Delete Button"));
@@ -43,7 +41,47 @@ void GameSaveState::init()
 		SCREEN_HEIGHT - _returnButton.getGlobalBounds().height - 20.f);
 	this->_deleteButton.setPosition(button2Pos);
 
-	this->renderTexture.create(SCREEN_WIDTH, SCREEN_HEIGHT);
+	this->loadFiles();
+}
+void GameSaveState::loadFiles()
+{
+	this->_savesList.clear();
+	std::vector<std::string> f = this->_data->fileManager.loadFilesFromDirectory("../Saves/");
+	for (auto& fi : f)
+	{
+		sf::Text t(fi, this->_data->assets.getFont("Pixel font"), 40);
+		this->_savesList.push_back(t);
+	}
+}
+
+void GameSaveState::saveFile()
+{
+	// pobranie czasu w formie liczby sekund od 1 stycznia 1970 roku
+	std::time_t currentTime = std::time(nullptr);
+
+	// inicjalizacja struktury tm na podstawie czasu
+	std::tm dateTime;
+	localtime_s(&dateTime, &currentTime);
+
+	// konwersja struktury tm na std::string
+	char buffer[80];
+	std::strftime(buffer, 80, "%d-%m-%Y %H:%M:%S", &dateTime);
+	std::string datetimeStr(buffer);
+
+	std::replace(datetimeStr.begin(), datetimeStr.end(), ' ', 'T');
+	std::replace(datetimeStr.begin(), datetimeStr.end(), ':', '_');
+	std::string filename = "../Saves/" + datetimeStr + ".txt";
+	std::ofstream dataFile(filename);
+
+	sf::Text text(datetimeStr, this->_data->assets.getFont("Pixel font"), 40);
+	text.setFillColor(sf::Color::White);
+	text.setStyle(sf::Text::Bold);
+
+
+	if (this->_data->fileManager.saveFile(std::move(dataFile), _currentLevel, _enemies, _character))
+	{
+		this->loadFiles();
+	}
 }
 
 void GameSaveState::handleInput()
@@ -62,53 +100,79 @@ void GameSaveState::handleInput()
 			std::cout << "Return to pause menu" << std::endl;
 			this->_data->machine.removeState();
 		}
-		if (this->_data->input.isObjectClicked(this->_saveButton, sf::Mouse::Left, this->_data->window) && savesList.size() < 12)
+
+		if (this->_data->input.isObjectClicked(this->_deleteButton, sf::Mouse::Left, this->_data->window) 
+			&& this->_currentSaveClicked!=nullptr)
 		{
-			// pobranie czasu w formie liczby sekund od 1 stycznia 1970 roku
-			std::time_t currentTime = std::time(nullptr);
+			std::string s = _currentSaveClicked->getString();
+			std::string filePath = "../Saves/" + s + ".txt";
 
-			// inicjalizacja struktury tm na podstawie czasu
-			std::tm dateTime;
-			localtime_s(&dateTime, &currentTime);
+			if (this->_data->fileManager.removeFile(filePath)) {
+				this->loadFiles();
+				this->_currentSaveClicked = nullptr;
+			}
+		}
 
-			// konwersja struktury tm na std::string
-			char buffer[80];
-			std::strftime(buffer, 80, "%d.%m.%Y %H:%M:%S", &dateTime);
-			std::string datetimeStr(buffer);
+		if (this->_data->input.isObjectClicked(this->_overwriteButton, sf::Mouse::Left, this->_data->window)
+			&& this->_currentSaveClicked != nullptr)
+		{
+			std::string s = _currentSaveClicked->getString();
+			std::string filePath = "../Saves/" + s + ".txt";
 
-			sf::Text text(datetimeStr, this->_data->assets.getFont("Pixel font"), 40);
-			text.setFillColor(sf::Color::White);
-			text.setStyle(sf::Text::Bold);
+			if (this->_data->fileManager.removeFile(filePath)) {
+				this->saveFile();
+				this->_currentSaveClicked = nullptr;
+			}
+		}
 
-			sf::Vector2f textPos(200.f, 100.f);
+		sf::Text* previousSaveClicked = this->_currentSaveClicked;
 
-			// Add the new sf::Text object to the savesList vector
-			savesList.push_back(text);
-
-			// Re-render the entire savesList vector to the render texture
-			this->renderTexture.clear(sf::Color::Transparent);
-			for (int i = 0; i < savesList.size(); i++)
-			{
-				savesList[i].setPosition(textPos);
-				this->renderTexture.draw(savesList[i]);
-
-				if ((i + 1) % maxSpritesPerRow == 0) {
-					textPos.x = 200.f;
-					textPos.y += savesList[i].getGlobalBounds().height + textSpacing;
+		for (sf::Text& text : _savesList) {
+			if (this->_data->input.isObjectClicked(text, sf::Mouse::Left, this->_data->window)) {
+				if (this->_currentSaveClicked == &text)
+				{
 				}
 				else {
-					textPos.x += savesList[i].getGlobalBounds().width + textSpacing;
+					// Ustaw kolor tekstu na niebieski dla aktualnego tekstu
+					text.setFillColor(sf::Color::Blue);
+					this->_currentSaveClicked = &text;
+
+					if (previousSaveClicked != nullptr) {
+						// Ustaw kolor tekstu na bia³y dla poprzedniego tekstu
+						previousSaveClicked->setFillColor(sf::Color::White);
+					}
 				}
 			}
-			this->renderTexture.display();
-
-			std::cout << "dodano" << std::endl;
 		}
+
+
+		// Dodaj nowy tekst tylko wtedy, gdy przycisk myszy jest wciœniêty i kursor myszy jest nad przyciskiem "save"
+		if (this->_data->input.isObjectClicked(this->_saveButton, sf::Mouse::Left, this->_data->window)
+			&& _savesList.size() < 12)
+		{
+			this->saveFile();
+		}
+	
 	}
+
 }
 
 void GameSaveState::update(float dt)
 {
+	sf::Vector2f textPos(150.f, 100.f);
+
+	for (int i = 0; i < _savesList.size(); i++)
+	{
+		_savesList[i].setPosition(textPos);
+
+		if ((i + 1) % _maxSpritesPerRow == 0) {
+			textPos.x = 150.f;
+			textPos.y += _savesList[i].getGlobalBounds().height + _textSpacing;
+		}
+		else {
+			textPos.x += _savesList[i].getGlobalBounds().width + _textSpacing;
+		}
+	}
 	sf::Cursor cursor;
 
 	if (this->_data->input.isMouseCursorOnObject(this->_returnButton, this->_data->window))
@@ -143,18 +207,10 @@ void GameSaveState::update(float dt)
 		this->_overwriteButton.setColor(sf::Color::White);
 		_data->window.setMouseCursor(cursor);
 	}
-
-	for (auto& text : savesList) {
+	for (auto& text : _savesList) {
 		if (this->_data->input.isMouseCursorOnObject(text, this->_data->window)) {
-			sf::Cursor cursor;
 			cursor.loadFromSystem(sf::Cursor::Hand);
-			text.setFillColor(sf::Color::Red);
-			text.setOutlineColor(sf::Color::Yellow);
 			_data->window.setMouseCursor(cursor);
-		}
-		else {
-			text.setFillColor(sf::Color::White);
-			text.setOutlineColor(sf::Color::White);
 		}
 	}
 }
@@ -168,8 +224,10 @@ void GameSaveState::draw(float dt)
 	this->_data->window.draw(this->_deleteButton);
 	this->_data->window.draw(this->_overwriteButton);
 
-	sf::Sprite sprite(this->renderTexture.getTexture());
-	this->_data->window.draw(sprite);
+	for (int i = 0; i < _savesList.size(); i++)
+	{
+		this->_data->window.draw(this->_savesList[i]);
+	}
 
 	this->_data->window.display();
 }

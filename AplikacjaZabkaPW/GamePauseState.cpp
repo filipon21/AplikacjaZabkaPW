@@ -8,7 +8,7 @@
 #include "MainMenuState.h"
 
 GamePauseState::GamePauseState(GameDataRef data, Level* level, std::vector<Enemy*> enemies, Character* character, unsigned currentLevel) :
-_data(data),_level(*level), _enemies(enemies), _currentLevel(currentLevel), _character(character)
+_data(std::move(data)),_level(level), _enemies(std::move(enemies)), _currentLevel(currentLevel), _character(character)
 {
 }
 

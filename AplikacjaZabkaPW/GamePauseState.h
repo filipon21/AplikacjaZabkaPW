@@ -19,7 +19,7 @@ public:
 
 private:
     GameDataRef _data;
-    Level _level;
+    Level* _level;
     std::vector<Enemy*> _enemies;
     unsigned _currentLevel;
     Character* _character;
